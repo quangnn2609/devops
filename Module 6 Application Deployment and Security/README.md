@@ -18,3 +18,37 @@ Môi trường này cũng có thể bao gồm các tài nguyên “mock (giả)�
 
 **Testing environment**
 
+Sau khi bạn đã viết code xong, bạn phải chuyển code của mình sang môi trường thứ hai được dành riêng cho việc kiểm thử code (testing), mặc dù khi làm việc trên các dự án nhỏ môi trường kiểm phát triển và môi trường kiểm tra thường kết hợp với nhau. Ở môi trường kiểm thử này phải có cấu trúc tương tự như môi trường production ở bước cuối cùng, ngay cả khi nó ở quo mô nhỏ hơn nhiều.
+
+Môi trường kiểm tra thường bao gồm các công cụ kiểm tra tự động như Jenkins, CicrleCI, hoặc Travis CI cũng như tích hợp với hệ thống kiểm soát phiên bản (version control system). Nó được chia sẽ với toàn bộ các team. Nó cũng bao gồm các công cụ preview code như Gerrit.
+
+**Staging environment**
+
+Sau khi code được kiểm thử, nó sẽ được chuyển sang môi trường Staging (một bản sau gần chính xác của môi trường production). staging càng gần với môi trường sản xuất thực tế thì càng tốt. Thay vì sử dụng môi trường staging ở quy mô nhỏ, một số tổ chức sử dũng hai môi trường sàn xuất, một trong số đó lưu trữ bản phát hành hiện tại của ứng dụng, môi trường còn lại chờ nhận bản phát hành mới. Trong trường hợp này, khi phiển bản mới được triển khai lưu lượng truy cập sẽ được chuyển (từ từ hoặc đột ngột nhầm mục đích cắt giảm) từ môi trường sản xuất hiện tại tới môi trường sản xuất còn lại. Với bản phát hành tiếp theo, qui trình sẽ được thực hiện ngược lại.
+
+Tất nhiên chi phí sẽ phải chăng hơn nhiều trong cloud, nơi một môi trường ảo hóa không được sử dụng có được chia nhỏ và tự động xây dựng lại khi cần thiết.
+
+**Production environment**
+
+Cuối cùng code sẽ được đưa tới môi trường Production (môi trường sản xuất), nơi người dùng cuối tương tác. Tại thời điểm này code đã được kiểm thử nhiều lần và nó không nên xuất hiện lỗi. Môi trường sản xuất phải có đủ kích cỡ và xây dựng để xử lý các lưu lượng truy cập dự kiến, bao gồm các đợt tăng đột biến theo mùa hoặc theo một sự kiện cụ thể.
+
+Xử lý lượng gia tặng đó là điều bạn phải lên kế hoạch khi xây dựng cơ sở hạ tầng của mình. Tuy nhiên, trước khi xem xét cơ sở hạ tầng bạn cần biết với các mô hình khác nhau mà bạn có thể sủ dụng để triển khai phần phần mềm.
+
+## Deployment Models
+
+**Bare metal**
+
+Cách quen thuộc và cơ bản nhất để triển khai phần mềm đó là cài đặt nó trực tiếp trên máy tính, hay con gọi là "bare metal". Ngoài việc đây là phương pháp đơn giản nhất, việc triển khai bare metal còn có những ưu điểm khác, chẳng hạn như phần mềm có thể truy cập trực tiếp vào hệ điều hành và phần cứng. Điều này hữu ích trong các tình huống mà bạn cần truy cập vào phần cứng chuyên dụng hoặc là cho các ứng dụng Hight Perfomance Computing trong đó mỗi bit tốc độ đều được tính.
+![image](https://user-images.githubusercontent.com/83932775/128640233-fb5c95e0-73ab-479b-b2f3-ff3cc2514893.png)
+* Bare metal deployment bản chất là triển khai trên một máy tính thực tế.
+
+
+
+**Virtual machines**
+
+
+**Container-based infrastructure**
+
+
+**Serverless computing**
+
