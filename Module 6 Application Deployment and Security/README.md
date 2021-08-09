@@ -42,12 +42,23 @@ Cách quen thuộc và cơ bản nhất để triển khai phần mềm đó là
 ![image](https://user-images.githubusercontent.com/83932775/128640233-fb5c95e0-73ab-479b-b2f3-ff3cc2514893.png)
 * Bare metal deployment bản chất là triển khai trên một máy tính thực tế.
 
+Tuy nhiên việc bất lợi đối với triển khai bare metal nằm ở chỗ cô lập các khối lượng công việc khác với nhau. Đối với bare metal mọi ứng dụng trên máy điều sử dụng một kernal, hệ điều hành, bộ nhớ,... Ngoài ra bare metal không linh hoạt về mặt tài nguyên, một máy có RAM 64 GB sẽ không thể điều chỉnh lớn hơn hoặc nhỏ hơn trừ khi có người tháo hoặc lắp thêm RAM.
+
+Thông thường, bare metal được sử dụng để làm cơ sở hạ tầng lưu trữ cho việc ảo hóa (trình giám sát - hypervisors) và cloud framework (trình điều phối các tài nguyên máy tính, lưu trữ và network). Cisco đi tiên phong trong việc phát triển các nền tảng Software-defined hardware (ví dụ như cisco UCS) giúp cơ sở hạ tầng bare metal dễ dàng cấu hình để phục vụ cả nhu cầu ứng dụng và Infrastructure-as-a-Service.
 
 
 **Virtual machines**
 
+Một cách giải quyết các vấn đề về tình linh hoạt và cô lập là sử dụng Virtual Machines (VMs). Máy ảo giống như một máy tính bên trong máy tính của bạn, có sức mạnh tính toán, network interface, và bộ nhớ riêng.
+
+Hypervisor là một phần mềm dùng để tạo và quản lý các máy ảo. Các hypervisor có sẵn dưới dạng mã nguồn mở (OpenStack, Linux KVM, XEN), và từ các nhà cung cấp thương mại như Oracle (VirtualBox), VMware(Horizon, vSphere, Fusion), Microsoft (Hyper-V) và các nhà cung cấp khác. Hypervisor thường được phân thành 2 loại:
+* Type 1: chạy trực tiếp trên phần cứng vật lý (bare metal)
+* Type 2: chạy dưới dạng một ứng dụng trong hệ điều hành
+
+Việc sử dụng cac máy ảo có thể khắc phục được một số hạn chế. Ví dụ: Nếu bạn có ba workload muốn tách biệt với nhau, bạn có thể tạo ra 3 máy ảo riêng biệt trên bare metal.
 
 **Container-based infrastructure**
+
 
 
 **Serverless computing**
