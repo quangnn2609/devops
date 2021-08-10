@@ -56,10 +56,27 @@ Hypervisor là một phần mềm dùng để tạo và quản lý các máy ả
 * Type 2: chạy dưới dạng một ứng dụng trong hệ điều hành
 
 Việc sử dụng cac máy ảo có thể khắc phục được một số hạn chế. Ví dụ: Nếu bạn có ba workload muốn tách biệt với nhau, bạn có thể tạo ra 3 máy ảo riêng biệt trên bare metal.
+![image](https://user-images.githubusercontent.com/83932775/128830419-6b993c3a-4334-4b0b-9abb-5ea941abf8cb.png)
+* Virtual machine nhận các tài nguyên được chia sẽ từ máy host
+
+Có một vài điểm lưu ý sau đây:
+1. Các ứng dụng chạy trên máy ảo sẽ phụ thuộc vào máy ảo đó. Truy cập tài nguyên bên ngoài máy ảo cần thông qua mạng ảo - virtual network.
+2. Mặc dù các máy ảo đang chạy trên cùng một máy tính, chúng có thể chạy các hệ điều hành khác nhau (được gọi là "guest operation system"), và hệ điều hành mà bare metal đang chạy (được gọi là "host operation system").
+3. Tổng dung lượng bộ nhớ ảo được phân bổ trên 3 máy ảo lớn hơn dung lượng RAM có sẵn trên máy chủ. Điều nay được gọi là "overcommitting". Điều này có thể xảy ra bởi vì không chắc chắn rằng cả ba máy áo sẻ cần sử dụng tất cả bộ nhớ ảo của chúng cùng một lúc và hypervisor có thể chia sẻ thời gian các máy ảo khi cần thiết. Overcommitting có thể dẫn đến các vần đề về hiệu suất nếu mức tiêu thụ tài nguyên quá lớn.
+
+Các máy ảo chạy trên một hypervisor như KVM, QEMU, hoặc VMware, cung cấp việc mô phỏng phần cứng hoặc quyền truy cập có kiểm soát vào phần cứng vật lý ở dưới. Hypervisor nằm trên hệ điều hành và quản lý các máy ảo.
+
+Máy ảo có thể thuận tiện vì một số lý do, trong đó không ít lý do là một Image VM có thể được lưu để sử dụng trong tương lai hoặc để những người khác có thể tạo và sử dụng. Điều này cho phép bạn phân phối một máy ảo, hoặc ít nhất, là phương tiện để sử dụng nó. Các ứng dụng chạy máy ảo, chẳng hạn như VirtualBox và VMware, cũng có thể chụp nhanh (snapshot) hoặc sao lưu một máy ảo để bạn có thể đưa nó về trạng thái trước đó, nếu cần.
+
+Bởi vì máy ảo rất giống máy vật lý, máy ảo có thể lưu trữ nhiều loại phần mềm, thậm chí cả phần mềm cũ. Môi trường ứng dụng mới hơn, chẳng hạn như container, có thể không đủ "giống như máy thật" để lưu trữ các ứng dụng không được viết với các giới hạn của chúng. 
 
 **Container-based infrastructure**
 
+Di chuyển lên bậc thang trừu tượng từ các máy ảo, bạn sẽ tìm thấy các container. Phần mềm để tạo và quản lý hoặc sắp xếp các container có sẵn từ Docker, AWS (Elasticized Container Service), Microsoft (Azure Container Service) và các phần mềm khác.
 
+Các container được thiết kế để cung cấp nhiều lợi ích giống như máy ảo, chẳng hạn như cô lập khối lượng công việc và khả năng chạy nhiều khối lượng công việc trên một máy duy nhất, nhưng chúng được kiến trúc hơi khác một chút.
+
+Thứ nhất, các container được thiết kế để khởi động nhanh chóng và do đó, chúng không bao gồm nhiều cơ sở hạ tầng phần mềm cơ bản. Một máy ảo chứa toàn bộ hệ điều hành khách, nhưng một vùng chứa chia sẻ hệ điều hành của máy chủ và sử dụng các mã nhị phân và thư viện dành riêng cho vùng chứa. 
 
 **Serverless computing**
 
