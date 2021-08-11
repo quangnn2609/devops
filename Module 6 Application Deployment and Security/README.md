@@ -76,7 +76,61 @@ Di chuyển lên bậc thang trừu tượng từ các máy ảo, bạn sẽ tì
 
 Các container được thiết kế để cung cấp nhiều lợi ích giống như máy ảo, chẳng hạn như cô lập khối lượng công việc và khả năng chạy nhiều khối lượng công việc trên một máy duy nhất, nhưng chúng được kiến trúc hơi khác một chút.
 
-Thứ nhất, các container được thiết kế để khởi động nhanh chóng và do đó, chúng không bao gồm nhiều cơ sở hạ tầng phần mềm cơ bản. Một máy ảo chứa toàn bộ hệ điều hành khách, nhưng một vùng chứa chia sẻ hệ điều hành của máy chủ và sử dụng các mã nhị phân và thư viện dành riêng cho vùng chứa. 
+Thứ nhất, các container được thiết kế để khởi động nhanh chóng và do đó, chúng không bao gồm nhiều cơ sở hạ tầng phần mềm cơ bản. Một máy ảo chứa toàn bộ hệ điều hành khách (guest OS), nhưng một container chia sẻ hệ điều hành của máy chủ (host OS) và sử dụng các mã nhị phân và thư viện dành riêng cho container.
+
+![image](https://user-images.githubusercontent.com/83932775/128988062-4b9c23e2-0f3e-444c-9288-f7e5035a589e.png)
+* Các container chia sẽ tài nguyên từ máy host bao gồm cả kernel
+
+Trong trường hợp các máy ảo mô phỏng toàn bộ máy tính, một vùng chứa thường chỉ đại diện cho một ứng dụng hoặc một nhóm ứng dụng. Giá trị của việc sử dụng vùng chứa là tất cả các thư viện và mã nhị phân bạn cần để chạy ứng dụng đều được bao gồm, vì vậy người dùng không phải thực hiện bước cài đặt bổ sung đó.
+
+Một điểm khác biệt quan trọng giữa Docker container và VM là mỗi VM có hệ điều hành hoàn chỉnh của riêng nó. Vùng chứa chỉ chứa một phần của hệ điều hành. Ví dụ: bạn có thể có một máy tính chủ Ubuntu Linux chạy một máy ảo CentOS Linux, một máy ảo Ubuntu Linux và một máy ảo Windows 10. Mỗi máy ảo này có hệ điều hành hoàn chỉnh của riêng nó. Điều này có thể rất tốn tài nguyên cho máy tính chủ.
+
+Với Docker, các vùng chứa chia sẻ cùng một nhân của máy tính chủ của chúng. Ví dụ: trên máy chủ Ubuntu Linux, bạn có thể có một bộ chứa Ubuntu Linux và một bộ chứa Centos Linux. Cả hai vùng chứa này đều chia sẻ cùng một nhân Linux. Tuy nhiên, bạn không thể có một vùng chứa chạy Windows 10 trên cùng một máy tính chủ Ubuntu Linux này, vì Windows sử dụng một nhân khác. Chia sẻ cùng một nhân yêu cầu ít tài nguyên hơn nhiều so với việc sử dụng các máy ảo riêng biệt, mỗi máy có một nhân riêng. 
+
+Vùng chứa cũng giải quyết vấn đề phát sinh khi nhiều ứng dụng cần các phiên bản khác nhau của cùng một thư viện để chạy. Bởi vì mỗi ứng dụng nằm trong vùng chứa riêng của nó, nó được cách ly khỏi bất kỳ thư viện và tệp nhị phân xung đột nào.
+
+Các thùng chứa cũng rất hữu ích vì có hệ sinh thái các công cụ xung quanh chúng. Các công cụ như Kubernetes có thể thực hiện điều phối các vùng chứa khá phức tạp và thực tế là các vùng chứa thường được thiết kế để không có trạng thái và khởi động nhanh chóng có nghĩa là bạn có thể tiết kiệm tài nguyên bằng cách không chạy chúng trừ khi bạn cần.
+
+Các vùng chứa cũng là nền tảng của điện toán tự nhiên đám mây, trong đó các ứng dụng nói chung là không trạng thái. Tính không trạng thái này làm cho bất kỳ trường hợp nào của một vùng chứa cụ thể có thể xử lý một yêu cầu. Khi bạn thêm điều này vào một khía cạnh khác của điện toán đám mây nhấn mạnh đến các dịch vụ, thì tính năng serverless computing sẽ trở nên khả thi. 
 
 **Serverless computing**
+
+Hãy bắt đầu với điểm quan trọng này: nói rằng các ứng dụng “không có máy chủ” là rất tốt cho tiếp thị, nhưng về mặt kỹ thuật thì điều đó không đúng. Tất nhiên ứng dụng của bạn đang chạy trên một máy chủ. Nó chỉ đang chạy trên một máy chủ mà bạn không kiểm soát và không cần phải suy nghĩ về nó. Do đó tên "serverless".
+
+Serverless computing tận dụng xu hướng hiện đại đối với các ứng dụng được xây dựng xung quanh các dịch vụ. Nghĩa là, ứng dụng thực hiện cuộc gọi đến một chương trình hoặc khối lượng công việc khác để hoàn thành một tác vụ cụ thể, để tạo ra một môi trường nơi các ứng dụng được cung cấp trên cơ sở “khi cần thiết”. 
+
+Nó hoạt động như thế này:
+
+Nó hoạt động như thế này:
+
+Bước 1. Bạn tạo ứng dụng của mình.
+
+Bước 2. Bạn triển khai ứng dụng của mình như một vùng chứa, để nó có thể chạy dễ dàng trong bất kỳ môi trường thích hợp nào.
+
+Bước 3. Bạn triển khai vùng chứa đó cho một nhà cung cấp serverless computing, chẳng hạn như AWS Lambda, các chức năng của Google Cloud hoặc thậm chí là một chức năng nội bộ dưới dạng Function as a Service. Việc triển khai này bao gồm thông số kỹ thuật về khoảng thời gian chức năng sẽ không hoạt động trước khi nó bị chia nhỏ.
+
+Bước 4. Khi cần thiết, ứng dụng của bạn sẽ gọi hàm.
+
+Bước 5. Trình cung cấp quay một thể hiện của vùng chứa, thực hiện tác vụ cần thiết và trả về kết quả.
+
+![image](https://user-images.githubusercontent.com/83932775/129039095-fb308f28-86d7-45a5-8906-65216b74ab61.png)
+* Serverlesss computing chịu trách nhiệm cấp tài nguyên cho nhà phát triển và chỉ khi ứng dụng chạy.
+
+Điều quan trọng cần lưu ý ở đây là nếu ứng dụng không máy chủ không cần thiết, nó sẽ không chạy và bạn sẽ không bị tính phí cho nó. Mặt khác, nếu bạn thường gọi nó nhiều lần, nhà cung cấp có thể tạo ra nhiều phiên bản để xử lý lưu lượng truy cập. Bạn không phải lo lắng về bất kỳ điều đó.
+
+Bởi vì sức chứa tăng và giảm theo nhu cầu, nó thường được gọi là “co giãn” hơn là “có thể mở rộng”.
+
+Mặc dù có một lợi thế rất lớn trên thực tế là bạn chỉ trả tiền cho các tài nguyên đang thực sự được sử dụng, trái ngược với một máy ảo có thể chạy mọi lúc, ngay cả khi dung lượng của nó không cần thiết. Mô hình serverless computing có nghĩa là bạn không có quyền kiểm soát máy chủ, vì vậy nó có thể không phù hợp từ góc độ bảo mật. 
+
+## Types of Infrastructure
+
+**On-Premises**
+
+**Private Cloud**
+
+**Public Cloud**
+
+**Hybrid Cloud**
+
+**Edge Cloud**
 
