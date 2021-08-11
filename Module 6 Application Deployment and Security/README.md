@@ -126,7 +126,24 @@ Mặc dù có một lợi thế rất lớn trên thực tế là bạn chỉ tr
 
 **On-Premises**
 
+Nói về mặt kỹ thuật, "On-Premisses(tại chỗ)" có nghĩa là bất kỳ hệ thống nào nằm trong phạm vi giới hạn của tòa nhà của bạn theo đúng nghĩa đen. Trong trường hợp này, chúng ta đang nói về các trung tâm dữ liệu truyền thống chứa các máy riêng lẻ được cung cấp cho các ứng dụng, thay vì các đám mây, bên ngoài hoặc cách khác.
+
+Các cơ sở hạ tầng truyền thống này là các trung tâm dữ liệu với các máy chủ dành riêng cho các ứng dụng riêng lẻ hoặc cho các máy ảo, về cơ bản cho phép một máy tính hoạt động giống như nhiều máy tính.
+
+Việc vận hành một trung tâm dữ liệu tại chỗ truyền thống yêu cầu các máy chủ, thiết bị lưu trữ và thiết bị mạng phải được đặt hàng, nhận, lắp ráp trong các giá đỡ ("giá đỡ và xếp chồng lên nhau"), di chuyển đến một vị trí, được kết nối với nguồn điện và dữ liệu. Thiết bị này phải được cung cấp các dịch vụ môi trường như bảo vệ nguồn điện, làm mát và phòng chống cháy nổ. Sau đó, các máy chủ cần được cấu hình hợp lý cho các vai trò của chúng, hệ điều hành và phần mềm phải được cài đặt, và tất cả chúng cần được bảo trì và giám sát.
+
+Tất cả các công việc cơ sở hạ tầng này cần thời gian và công sức. Các yêu cầu về tài nguyên cần phải thông qua nhóm vận hành, điều này có thể dẫn đến sự chậm trễ hàng ngày, hàng tuần hoặc thậm chí hàng tháng trong khi phần cứng mới được lấy, chuẩn bị và cung cấp.
+
+Ngoài ra, mở rộng một ứng dụng thường có nghĩa là chuyển nó sang một máy chủ lớn hơn, điều này làm cho việc mở rộng quy mô trở thành một sự kiện lớn. Điều đó có nghĩa là một ứng dụng gần như luôn lãng phí tiền bạc với dung lượng dư thừa không được sử dụng hoặc hoạt động kém hiệu quả vì nó không có đủ tài nguyên.
+
+Những vấn đề này có thể được giải quyết bằng cách chuyển sang giải pháp dựa trên đám mây. 
+
 **Private Cloud**
+
+Nhược điểm của cơ sở hạ tầng tại chỗ có thể được giải quyết dễ dàng bằng điện toán đám mây. Đám mây là một hệ thống cung cấp khả năng tự phục vụ cho tài nguyên máy tính, mạng và lưu trữ.
+
+![image](https://user-images.githubusercontent.com/83932775/129086440-0b202679-3701-494d-9931-0c5245985d44.png)
+* Trong cơ sở hạ tầng đám mây riêng, tổ chức kiểm soát tất cả các tài nguyên
 
 **Public Cloud**
 
