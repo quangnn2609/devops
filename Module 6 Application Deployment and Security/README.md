@@ -145,9 +145,70 @@ Nhược điểm của cơ sở hạ tầng tại chỗ có thể được giả
 ![image](https://user-images.githubusercontent.com/83932775/129086440-0b202679-3701-494d-9931-0c5245985d44.png)
 * Trong cơ sở hạ tầng đám mây riêng, tổ chức kiểm soát tất cả các tài nguyên
 
+Đám mây bao gồm một mặt phẳng điều khiển (control plane), cho phép bạn thực hiện các yêu cầu. Bạn có thể tạo một máy ảo mới, đính kèm một khối lượng lưu trữ, thậm chí tạo một mạng mới và tính toán tài nguyên.
+
+Các đám mây cung cấp quyền truy cập tự phục vụ vào các tài nguyên máy tính, chẳng hạn như máy ảo, thùng chứa và thậm chí cả bare metal. Điều này có nghĩa là người dùng có thể đăng nhập vào trang tổng quan hoặc sử dụng dòng lệnh để tự tạo ra các tài nguyên mới, thay vì đợi CNTT giải quyết khi nhận ticket. Những nền tảng này đôi khi được gọi là Infrastructure-as-a-Service Cơ sở hạ tầng như một dịch vụ (IaaS). Các nền tảng private cloud phổ biến bao gồm VMware (độc quyền), OpenStack (mã nguồn mở) và Kubernetes (một khung điều phối vùng chứa). Cơ sở hạ tầng phần cứng cơ bản cho đám mây có thể được cung cấp bởi các máy chủ bare metal được nối mạng thông thường hoặc bởi các giải pháp cơ sở hạ tầng vật lý "hyperconverged-siêu hội tụ" hoặc bare metal tiên tiến hơn, được quản lý, chẳng hạn như Cisco UCS và Cisco HyperFlex, tương ứng.
+
+Điều phân biệt đám mây riêng với các loại đám mây khác là tất cả các tài nguyên trong đám mây đều nằm dưới sự kiểm soát của tổ chức của bạn. Trong hầu hết các trường hợp, một đám mây riêng sẽ được đặt trong trung tâm dữ liệu của bạn, nhưng đó không phải là yêu cầu về mặt kỹ thuật để được gọi là “riêng tư”. Phần quan trọng là tất cả các tài nguyên chạy trên phần cứng đều thuộc về tổ chức chủ sở hữu.
+
+Lợi thế của private cloud là bạn có toàn quyền kiểm soát vị trí đặt nó, điều này rất quan trọng trong các tình huống có các quy định tuân thủ cụ thể và bạn thường không phải lo lắng về các khối lượng công việc khác trên hệ thống.
+
+Mặt khác, bạn phải có một nhóm vận hành có thể quản lý đám mây và giữ cho nó hoạt động. 
+
 **Public Cloud**
+
+Public Cloud - Đám mây công cộng về cơ bản giống như Private Cloud - đám mây riêng tư , nhưng nó được quản lý bởi một nhà cung cấp đám mây công cộng. Các đám mây công cộng cũng có thể chạy các hệ thống như OpenStack hoặc Kubernetes hoặc chúng có thể là các đám mây độc quyền cụ thể như Amazon Web Services hoặc Azure.
+
+Khách hàng của đám mây công cộng có thể chia sẻ tài nguyên với các tổ chức khác: máy ảo của bạn có thể chạy trên cùng một máy chủ lưu trữ như một máy ảo của người khác. Ngoài ra, các nhà cung cấp đám mây công cộng có thể cung cấp cho khách hàng cơ sở hạ tầng chuyên dụng. Hầu hết cung cấp một số 'khu vực' đám mây riêng biệt về mặt địa lý, trong đó khối lượng công việc có thể được lưu trữ. Điều này cho phép khối lượng công việc được đặt gần với người dùng (giảm thiểu độ trễ), hỗ trợ dự phòng địa lý (các khu vực Bờ Đông và Bờ Tây không có khả năng ngoại tuyến cùng một lúc) và cho phép kiểm soát theo khu vực pháp lý đối với nơi dữ liệu được lưu trữ.
+
+![image](https://user-images.githubusercontent.com/83932775/129240139-89758685-b00e-4f44-8343-e49d16146d6c.png)
+* Với đám mây công cộng, tổ chức không kiểm soát tài nguyên
+
+Các đám mây công cộng có thể hữu ích vì bạn không phải trả tiền cho phần cứng mà bạn sẽ không sử dụng, vì vậy bạn có thể mở rộng quy mô hầu như vô thời hạn miễn là tải yêu cầu, sau đó giảm quy mô khi lưu lượng truy cập chậm. Bởi vì bạn chỉ trả tiền cho những tài nguyên bạn đang thực sự sử dụng, giải pháp này có thể tiết kiệm nhất vì ứng dụng của bạn không bao giờ hết tài nguyên và bạn không phải trả tiền cho những tài nguyên bạn không sử dụng. Bạn cũng không phải lo lắng về việc bảo trì hoặc vận hành phần cứng; nhà cung cấp đám mây công cộng xử lý điều đó. Tuy nhiên, trên thực tế, khi đám mây của bạn có kích thước nhất định, các lợi thế về chi phí có xu hướng biến mất và tốt hơn hết bạn nên sử dụng một đám mây riêng.
+
+Có một nhược điểm của đám mây công cộng. Bởi vì bạn đang chia sẻ đám mây với những người dùng khác, bạn có thể phải đối mặt với các tình huống trong đó khối lượng công việc khác chiếm nhiều hơn tỷ lệ chia sẻ tài nguyên của họ.
+
+Vấn đề này tồi tệ hơn khi nhà cung cấp đám mây chấp nhận overcommitting. Nhà cung cấp giả định rằng không phải tất cả tài nguyên sẽ được sử dụng cùng một lúc và phân bổ nhiều tài nguyên "ảo" hơn tài nguyên "vật lý". Ví dụ, không có gì lạ khi thấy tỷ lệ vượt quá 16: 1 cho các CPU, có nghĩa là đối với mỗi CPU vật lý, có thể có 16 CPU ảo được phân bổ cho các máy ảo. Bộ nhớ cũng có thể được truyền quá mức. Với tỷ lệ 2: 1 cho bộ nhớ, máy chủ có RAM 128GB có thể lưu trữ 256GB khối lượng công việc. Với đám mây công cộng, bạn không có quyền kiểm soát điều đó (tiết kiệm khi trả nhiều tiền hơn cho các phiên bản chuyên dụng hoặc các dịch vụ khác giúp đảm bảo mức độ dịch vụ). 
 
 **Hybrid Cloud**
 
+Như bạn có thể đoán, đám mây lai là sự kết hợp của hai loại đám mây khác nhau. Thông thường, đám mây lai được sử dụng để làm cầu nối giữa đám mây riêng và đám mây công cộng trong một ứng dụng.
+
+![image](https://user-images.githubusercontent.com/83932775/129249438-6e1a7097-b494-4ed1-b604-e254bbf77af5.png)
+* Đám mây lai kết hợp đám mây công cộng và đám mây riêng để cung cấp tài nguyên và bảo mật bổ sung khi cần thiết.
+
+Ví dụ: bạn có thể có một ứng dụng chạy trên đám mây riêng của mình, nhưng sẽ "bùng nổ" lên đám mây công cộng nếu nó hết tài nguyên. Bằng cách này, bạn có thể tiết kiệm tiền bằng cách không mua quá nhiều cho đám mây riêng của mình, nhưng vẫn có tài nguyên khi bạn cần.
+
+Bạn cũng có thể đi theo hướng khác và có một ứng dụng chủ yếu chạy trên đám mây công cộng, nhưng sử dụng tài nguyên trong đám mây riêng để bảo mật hoặc kiểm soát. Ví dụ: bạn có thể có một ứng dụng web phục vụ hầu hết nội dung của nó từ đám mây công cộng, nhưng lưu trữ thông tin người dùng trong cơ sở dữ liệu trong đám mây riêng.
+
+Đám mây lai thường bị nhầm lẫn với đa đám mây, trong đó một tổ chức sử dụng nhiều đám mây cho các mục đích khác nhau. Điều phân biệt đám mây lai là việc sử dụng nhiều hơn một đám mây trong một ứng dụng duy nhất. Do đó, một ứng dụng đám mây lai phải nhận thức rõ hơn nhiều về môi trường của nó so với một ứng dụng sống trong một đám mây duy nhất.
+
+Một ứng dụng đám mây không lai và đám mây của nó giống như một con cá và đại dương; con cá không cần nhận thức về đại dương bởi vì đại dương chỉ ở đó, xung quanh con cá. Khi bạn bắt đầu thêm các khả năng đám mây kết hợp vào một ứng dụng, ứng dụng đó phải biết tài nguyên nào có sẵn và từ đâu.
+
+Tốt nhất là bản thân ứng dụng không phải xử lý những việc này trực tiếp. Cách tốt hơn là có một số loại giao diện mà ứng dụng có thể gọi khi nó cần thêm tài nguyên và giao diện đó đưa ra quyết định về nơi chạy các tài nguyên đó và chuyển chúng trở lại ứng dụng. Bằng cách này, logic ánh xạ tài nguyên có thể được kiểm soát độc lập với chính ứng dụng và bạn có thể điều chỉnh nó cho các tình huống khác nhau. Ví dụ: bạn có thể giữ tất cả tài nguyên bên trong trong giai đoạn thử nghiệm và gỡ lỗi, sau đó từ từ tăng cường sử dụng đám mây công cộng.
+
+Một cách để thực hiện điều này là thông qua một công cụ như Cisco Hybrid Cloud Platform dành cho Google Cloud, công cụ này quản lý mạng, bảo mật, quản lý, trung tâm dữ liệu, phần mềm và công cụ mã nguồn mở và API. Điều này cung cấp cho bạn một môi trường duy nhất, nhất quán, an toàn cho ứng dụng của bạn, cho phép ứng dụng hoạt động trên cả trung tâm dữ liệu tại chỗ và Google Cloud.
+
+Ngoài ra, bộ điều phối vùng chứa đã trở nên rất phổ biến với các công ty sử dụng triển khai đám mây lai. Các bộ điều phối cung cấp một lớp bất khả tri của nhà cung cấp đám mây mà ứng dụng có thể sử dụng để yêu cầu các tài nguyên cần thiết, làm giảm nhận thức về môi trường cần thiết trong chính ứng dụng
+
+
 **Edge Cloud**
+
+Loại đám mây mới nhất là đám mây cạnh. Điện toán đám mây Edge đang trở nên phổ biến nhờ sự phát triển của Internet vạn vật (IoT). Những thiết bị được kết nối này, chẳng hạn như máy ảnh được kết nối, xe tự hành và thậm chí cả điện thoại thông minh, ngày càng được hưởng lợi từ sức mạnh tính toán tồn tại gần chúng hơn trên mạng.
+
+Hai lý do chính mà khả năng tính toán gần hơn giúp các thiết bị IoT là tốc độ và băng thông. Ví dụ: nếu bạn đang chơi một trò chơi bắn súng góc nhìn thứ nhất, ngay cả nửa giây độ trễ giữa thời điểm bạn bóp cò và khi cảnh quay được đăng ký là không thể chấp nhận được. Một trường hợp khác mà độ trễ có thể gây tử vong, theo nghĩa đen là với các phương tiện tự lái. Với vận tốc 55 dặm một giờ, một chiếc ô tô đi được hơn 40 feet chỉ trong 500 mili giây. Nếu người đi bộ bước ra lề đường, chiếc xe sẽ không thể chờ hướng dẫn về việc phải làm.
+
+Có một vấn đề thứ hai. Điển hình là xe tự lái ngăn chặn vấn đề độ trễ bằng cách tự quyết định, nhưng điều đó lại dẫn đến các vấn đề của chính nó. Những chiếc xe này sử dụng công nghệ máy học, đòi hỏi một lượng lớn dữ liệu được truyền đến và đi từ chiếc xe. Người ta ước tính rằng những phương tiện này tạo ra hơn 4 TB dữ liệu mỗi giờ và hầu hết các mạng không thể xử lý loại lưu lượng đó (đặc biệt là với sự tăng trưởng dự kiến ​​của những phương tiện này trên thị trường).
+
+Để giải quyết cả hai vấn đề này, một đám mây cạnh di chuyển điện toán đến gần nơi cần thiết. Thay vì các giao dịch được thực hiện từ một người dùng cuối ở Cleveland, đến đám mây chính ở Oregon, có thể có một đám mây trung gian, một đám mây cạnh, ở Cleveland. Đám mây biên xử lý dữ liệu hoặc giao dịch. Sau đó, nó sẽ gửi phản hồi lại cho khách hàng hoặc thực hiện phân tích sơ bộ dữ liệu và gửi kết quả tới một đám mây khu vực có thể ở xa hơn. 
+
+![image](https://user-images.githubusercontent.com/83932775/129251423-c7e50114-956b-4a1c-b5f9-92b5ec139a93.png)
+* Điện toán đám mây cạnh cho phép các tài nguyên đến gần hơn với nơi chúng cần thiết
+
+Điện toán đám mây biên bao gồm một hoặc nhiều đám mây trung tâm hoạt động như một trung tâm cho chính các đám mây biên. Phần cứng cho các đám mây cạnh được đặt càng gần người dùng càng tốt. Ví dụ: bạn có thể có phần cứng cạnh trên tháp di động thực tế xử lý các tín hiệu đến và đi từ điện thoại di động của người dùng.
+
+Một lĩnh vực khác mà bạn có thể thấy điện toán biên là bán lẻ, nơi bạn có nhiều cửa hàng. Mỗi cửa hàng có thể có đám mây nội bộ của riêng mình. Đây là một đám mây rìa ăn vào đám mây khu vực, đến lượt nó có thể đưa vào một đám mây trung tâm. Kiến trúc này mang lại cho các văn phòng địa phương những lợi ích khi có đám mây của riêng họ (chẳng hạn như triển khai nhất quán các API để đảm bảo mỗi cửa hàng có thể được quản lý, cập nhật và giám sát một cách hiệu quả).
+
+Không có gì "đặc biệt" về các đám mây cạnh. Chúng chỉ là những đám mây điển hình. Điều khiến chúng trở nên "cạnh tranh" là chúng đang ở đâu và chúng được kết nối với nhau. Tuy nhiên, có một điều nữa về các đám mây cạnh. Vì chúng thường chạy trên phần cứng nhỏ hơn nhiều so với các đám mây "điển hình", chúng có thể bị hạn chế tài nguyên hơn. Ngoài ra, phần cứng đám mây cạnh phải đáng tin cậy, hiệu quả về mặt sử dụng năng lượng và tốt nhất là có thể quản lý từ xa, vì nó có thể nằm ở khu vực hẻo lánh, chẳng hạn như tháp di động ở giữa sa mạc, nơi khó bảo dưỡng phần cứng. . 
+
 
