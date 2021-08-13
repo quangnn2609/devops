@@ -211,4 +211,53 @@ Một lĩnh vực khác mà bạn có thể thấy điện toán biên là bán 
 
 Không có gì "đặc biệt" về các đám mây cạnh. Chúng chỉ là những đám mây điển hình. Điều khiến chúng trở nên "cạnh tranh" là chúng đang ở đâu và chúng được kết nối với nhau. Tuy nhiên, có một điều nữa về các đám mây cạnh. Vì chúng thường chạy trên phần cứng nhỏ hơn nhiều so với các đám mây "điển hình", chúng có thể bị hạn chế tài nguyên hơn. Ngoài ra, phần cứng đám mây cạnh phải đáng tin cậy, hiệu quả về mặt sử dụng năng lượng và tốt nhất là có thể quản lý từ xa, vì nó có thể nằm ở khu vực hẻo lánh, chẳng hạn như tháp di động ở giữa sa mạc, nơi khó bảo dưỡng phần cứng. . 
 
+# Creating and Deploying a Sample Application
+
+## What is Docker?
+
+Cách phổ biến nhất để chứa một ứng dụng là triển khai nó dưới dạng một vùng chứa Docker. Vùng chứa là một cách đóng gói mọi thứ bạn cần để chạy ứng dụng của mình, để nó có thể dễ dàng được triển khai trong nhiều môi trường khác nhau. Docker là một cách tạo và chạy vùng chứa đó. Cụ thể, Docker là một định dạng kết hợp một số công nghệ khác nhau để tạo ra thứ mà chúng ta biết ngày nay là vùng chứa. Các công nghệ này là:
+- Namespaces: Những không gian này cô lập các phần khác nhau của vùng chứa đang chạy. Ví dụ: bản thân tiến trình bị cô lập trong không gian tên pid (Process ID), hệ thống tệp bị cô lập trong không gian tên **mnt** (mount) và mạng được cách ly trong không gian tên mạngCác nhóm này là một khái niệm linux tiêu chuẩn cho phép hệ thống giới hạn tài nguyên, chẳng hạn như RAM hoặc bộ nhớ, được sử dụng bởi một ứng dụng.
+- Control groups: Các nhóm **cgroups** một khái niệm linux tiêu chuẩn cho phép hệ thống giới hạn tài nguyên, chẳng hạn như RAM hoặc bộ nhớ, được sử dụng bởi một ứng dụng.
+- Union File Systems: Các hệ thống tệp **UnionFS** này là hệ thống tệp được xây dựng theo từng lớp, kết hợp các tài nguyên. 
+
+Docker image là một tập hợp các tệp chỉ đọc không có trạng thái. Docker Image chứa mã nguồn, thư viện và các phụ thuộc khác cần thiết để chạy một ứng dụng. Vùng chứa Docker là phiên bản thời gian chạy của Docker image. Bạn có thể có nhiều vùng chứa đang chạy của cùng một Docker image. Docker image giống như một công thức làm bánh và bạn có thể làm bao nhiêu chiếc bánh (Docker container) tùy thích.
+
+Image lần lượt có thể được lưu trữ trong registries - các cơ quan đăng ký như Docker Hub. Nhìn chung, hệ thống trông như thế này:
+
+![image](https://user-images.githubusercontent.com/83932775/129319372-4670b881-0a4f-47da-9f5c-81c988faa0d7.png)
+* Tạo vùng chứa bao gồm việc kéo image hoặc mẫu từ kho lưu trữ, sau đó sử dụng nó để tạo vùng chứa
+
+Vì vậy, một phiên bản đơn giản của quy trình tạo vùng chứa sẽ trông như thế này:
+
+**Step 1.** Tạo một image mới bằng cách sử dụng **docker build** hoặc kéo một bản sao của một hình ảnh hiện có từ sổ đăng ký bằng cách sử dụng **docker pull**. (Tùy thuộc vào trường hợp, bước này là tùy chọn. Xem bước 3.)
+
+**Step 2.** Chạy một vùng chứa dựa trên image bằng cách sử dụng **docker run** hoặc **docker container create**.
+
+**Step 3.** Daemon Docker kiểm tra xem nó có bản sao cục bộ của image hay không. Nếu không, nó sẽ kéo hình ảnh từ registry.
+
+**Step 4.** Daemon Docker tạo một vùng chứa dựa trên hình ảnh và nếu sử dụng **docker run**, hãy đăng nhập vào nó và thực hiện lệnh được yêu cầu.
+
+Như bạn có thể thấy, nếu bạn định tạo một triển khai dựa trên vùng chứa của ứng dụng mẫu, bạn sẽ phải tạo một image. Để làm điều đó, bạn cần một Dockerfile. 
+
+## What is a Dockerfile?
+
+Nếu bạn đã sử dụng một ngôn ngữ mã hóa như C, bạn biết rằng nó yêu cầu bạn biên dịch mã của mình. Nếu vậy, bạn có thể quen với khái niệm “makefile”. Đây là tệp mà tiện ích make sử dụng để biên dịch và xây dựng tất cả các phần của ứng dụng.
+
+Đó là những gì một **Dockerfile** làm cho Docker. Nó là một tệp văn bản đơn giản, có tên là **Dockerfile**. Nó xác định các bước mà lệnh xây dựng docker cần thực hiện để tạo một hình ảnh sau đó có thể được sử dụng để tạo vùng chứa đích.
+
+Bạn có thể tạo một **Dockerfile** rất đơn giản để tạo một vùng chứa Ubuntu. Sử dụng lệnh **cat** để tạo **Dockerfile**, sau đó thêm **FROM ubuntu** vào tệp. Nhập **Ctrl + D** để lưu và thoát khỏi tệp với văn bản sau và lưu nó trong thư mục hiện tại của bạn: 
+
+![image](https://user-images.githubusercontent.com/83932775/129372252-682dd486-f3c5-4667-85fd-064cc0bb7f0e.png)
+
+Đó là tất cả những gì nó cần, chỉ một dòng. Bây giờ bạn có thể sử dụng lệnh **docker build** để xây dựng image như trong ví dụ sau. Tùy chọn **-t** được sử dụng để đặt tên cho bản dựng. Lưu ý dấu chấm (**.**) Ở cuối lệnh chỉ định rằng image sẽ được tạo trong thư mục hiện tại. Sử dụng **docker build --help** để xem tất cả các tùy chọn có sẵn.
+
+![image](https://user-images.githubusercontent.com/83932775/129373139-282486a8-d934-4bb0-b4f2-7c41f2615edd.png)
+Nhập **docker images** để xem image của bạn trong danh sách image trên máy ảo DEVASC:
+![image](https://user-images.githubusercontent.com/83932775/129374168-ec0cabce-ae26-4e1c-a350-1802366a3b56.png)
+
+Bây giờ bạn đã có image, hãy sử dụng lệnh **docker run** để chạy nó. Bây giờ bạn đang ở trong bash shell BÊN TRONG docker image mà bạn đã tạo. Thay đổi thư mục chính và nhập **ls** để thấy rằng nó trống và sẵn sàng để sử dụng. Nhập **exit** để rời khỏi vùng chứa Docker và quay lại hệ điều hành chính của máy ảo DEVASC của bạn.
+![image](https://user-images.githubusercontent.com/83932775/129375202-1bfd3068-63b8-4303-a39d-e16be633a0a4.png)
+
+## Anatomy of a Dockerfile
+
 
