@@ -338,10 +338,14 @@ Theo mặc định, Docker sử dụng sổ đăng ký Docker Hub, mặc dù b�
 ![image](https://user-images.githubusercontent.com/83932775/129453343-75d739f7-7424-4b19-85ed-4785de7410e4.png)
 Tiếp theo, bạn commit một phiên bản vùng chứa đang chạy của image của bạn. Ví dụ: thùng chứa trăn đang chạy trong ví dụ này. Commit vùng chứa bằng lệnh commit của docker.
 ![image](https://user-images.githubusercontent.com/83932775/129454810-edb0a0d0-d70f-4d40-8be8-1b9ffcef4072.png)
+
 Tiếp theo, sử dụng lệnh **docker tag** để gắn thẻ cho image mà bạn đã commit. Thẻ có dạng sau:
 
-**<repository>/<imagename>:<tag>**
+**\<repository>/\<imagename>:\<tag>**
 
-Phần đầu tiên, kho lưu trữ, thường là tên người dùng của tài khoản lưu trữ hình ảnh. Trong ví dụ này, nó là người theo chủ nghĩa nghiêm túc. Tiếp theo là tên hình ảnh, và cuối cùng là thẻ tùy chọn. (Hãy nhớ rằng, nếu bạn không chỉ định nó, nó sẽ xuất hiện muộn nhất.)
+Phần đầu tiên, kho lưu trữ, thường là tên người dùng của tài khoản lưu trữ hình ảnh. Trong ví dụ này, nó là **devnetstudent**. Tiếp theo là tên hình ảnh, và cuối cùng là thẻ tùy chọn. (Hãy nhớ rằng, nếu bạn không chỉ định nó, nó sẽ xuất hiện muộn nhất.)
 
 Trong ví dụ này, thẻ có thể là v1, như được hiển thị ở đây:
+
+![image](https://user-images.githubusercontent.com/83932775/129455029-9c81e3bc-b914-47e1-8b2f-432193685378.png)
+
