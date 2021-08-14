@@ -260,4 +260,78 @@ Bây giờ bạn đã có image, hãy sử dụng lệnh **docker run** để ch
 
 ## Anatomy of a Dockerfile
 
+Tất nhiên, nếu tất cả những gì bạn có thể làm với **Dockerfile** là khởi động một hệ điều hành sạch, điều đó sẽ hữu ích, nhưng những gì bạn cần là cách bắt đầu với một mẫu và xây dựng từ đó.
 
+Lưu ý: Các bước hiển thị trong phần còn lại của chủ đề này chỉ dành cho mục đích hướng dẫn. Các chi tiết bổ sung mà bạn cần để hoàn thành các lệnh này trong máy ảo DEVASC của bạn không được cung cấp. Tuy nhiên, bạn sẽ hoàn thành các bước tương tự trong phòng thí nghiệm Build a Sample Web App in a Docker Container ở phần sau của chủ đề.
+
+Hãy xem xét tệp **Dockerfile** sau chứa một ứng dụng Python: 
+
+![image](https://user-images.githubusercontent.com/83932775/129440469-593df859-963c-46bb-97ee-5837d17b61c9.png)
+
+Trong **Dockerfile** ở trên, giải thích về các lệnh như sau:
+
+* Lệnh **FROM** cài đặt Python trong Docker image. Nó gọi một image mặc định dựa trên Debian Linux từ Docker Hub, với phiên bản Python mới nhất được cài đặt.
+* Lệnh **WORKDIR** yêu cầu Docker sử dụng **/home/ubuntu** làm thư mục làm việc.
+* Lệnh **COPY** yêu cầu Docker sao chép tệp sample-app.py từ thư mục hiện tại của Dockerfile vào **/home/ubuntu.**
+* Lệnh **RUN** cho phép bạn chạy trực tiếp các lệnh trên vùng chứa. Trong ví dụ này, Flask đã được cài đặt. Flask là một nền tảng để hỗ trợ ứng dụng của bạn dưới dạng ứng dụng web.
+* Lệnh **CMD** sẽ khởi động máy chủ khi bạn chạy vùng chứa thực. Tại đây, bạn sử dụng lệnh python để chạy sample-app.py bên trong vùng chứa.
+* Lệnh **EXPOSE** cho Docker biết rằng bạn muốn để public cổng 8080. Lưu ý rằng đây là cổng mà Flask đang lắng nghe. Nếu bạn đã định cấu hình máy chủ web của mình để lắng nghe ở một nơi khác (chẳng hạn như yêu cầu https trên cổng 443) thì đây là nơi cần lưu ý.
+
+Sử dụng lệnh **docker build** để xây dựng image. Trong đầu ra sau, image đã được xây dựng trước đó. Do đó, Docker tận dụng những gì được lưu trữ trong bộ nhớ cache để tăng tốc quá trình.
+
+![image](https://user-images.githubusercontent.com/83932775/129449066-96c1fe08-9750-4f92-9275-73baf2597660.png)
+
+Như bạn có thể thấy, Docker đi qua từng bước trong Dockerfile, bắt đầu với image base, Python. Nếu hình image này không tồn tại trên hệ thống của bạn, Docker sẽ kéo nó từ registry. Cơ quan registry mặc định là Docker Hub. Tuy nhiên, trong một môi trường an toàn, bạn có thể thiết lập registry image vùng chứa đáng tin cậy của riêng mình. Lưu ý rằng image thực sự là một số image khác nhau được xếp chồng lên nhau, giống như bạn đang xếp các lệnh của riêng mình lên trên hình ảnh cơ sở.
+
+Lưu ý rằng giữa các bước như thực hiện một lệnh, Docker thực sự tạo một vùng chứa mới và xây dựng một hình ảnh trung gian, một lớp mới, bằng cách lưu vùng chứa đó. Trên thực tế, bạn có thể tự mình làm điều đó bằng cách tạo vùng chứa, thực hiện các thay đổi bạn muốn, sau đó lưu vùng chứa đó dưới dạng hình ảnh mới.
+
+Trong ví dụ trước, chỉ một số lượng nhỏ lệnh Dockerfile có sẵn được sử dụng. Danh sách đầy đủ có sẵn trong tài liệu Docker trong tham chiếu Dockerfile. Hiện tại, một danh sách các lệnh có sẵn trông giống như sau:
+
+FROM
+MAINTAINER
+RUN
+CMD
+EXPOSE
+ENV
+COPY
+ENTRYPOINT
+VOLUME
+USER
+WORKDIR
+ARG
+ONBUILD
+STOPSIGNAL
+LABEL
+
+Nhập **docker images** để xem danh sách các image. Lưu ý rằng thực tế có hai image hiện đã được lưu vào bộ nhớ đệm trên máy. Đầu tiên là image Python, mà bạn đã sử dụng làm cơ sở của mình. Docker đã lưu trữ nó để nếu bạn muốn xây dựng lại image của mình, bạn sẽ không phải tải xuống lại.
+
+## Start a Docker Container Locally
+
+Bây giờ image đó đã được tạo, hãy sử dụng nó để tạo một vùng chứa mới và thực sự thực hiện một số công việc bằng cách nhập lệnh **docker run**, như được hiển thị trong kết quả sau. Trong trường hợp này, một số tham số được chỉ định. Tham số **-d** là viết tắt của **--detach** và cho biết bạn muốn chạy nó ở chế độ nền. Tham số **-P** yêu cầu Docker xuất bản nó trên các cổng mà bạn đã tiếp xúc (trong trường hợp này là 8080).
+![image](https://user-images.githubusercontent.com/83932775/129450576-38c4283e-bf7d-43cd-981f-a4274b254853.png)
+Bạn có thể thấy vùng chứa bằng cách liệt kê các processes:
+![image](https://user-images.githubusercontent.com/83932775/129451161-46431874-6d85-428c-a1f0-e7f3539ddc71.png)
+
+Có một số điều cần lưu ý ở đây. Làm việc ngược lại, lưu ý rằng Docker đã gán tên cho vùng chứa, **jovial_sammet**. Bạn cũng có thể tự đặt tên cho nó bằng tùy chọn **--name**. Ví dụ:
+
+**docker run -d -P --name pythontest sample-app-image**
+
+Cũng lưu ý rằng, mặc dù container đang lắng nghe trên cổng 8080, đó chỉ là một cổng nội bộ. Docker đã chỉ định một cổng bên ngoài, trong trường hợp này là 32774, sẽ chuyển tiếp đến cổng bên trong đó. Điều này cho phép bạn chạy nhiều vùng chứa lắng nghe trên cùng một cổng mà không xảy ra xung đột. Nếu bạn muốn tải lên trang web ứng dụng mẫu của mình, bạn có thể sử dụng địa chỉ IP công cộng cho máy chủ lưu trữ và cổng đó. Ngoài ra, nếu bạn gọi nó từ chính máy chủ, bạn vẫn sẽ sử dụng cổng bên ngoài đó, như được hiển thị với lệnh curl sau đây.
+![image](https://user-images.githubusercontent.com/83932775/129451357-50270209-08bb-4fe3-bea4-81b35daa003b.png)
+
+Docker cũng cho phép bạn chỉ định một cổng cụ thể để chuyển tiếp, để bạn có thể tạo một hệ thống dễ đoán hơn:
+![image](https://user-images.githubusercontent.com/83932775/129451382-a1ca126a-6cb8-4480-8f64-1f154e0861af.png)
+
+Khi vùng chứa của bạn đang chạy, bạn có thể đăng nhập vào nó giống như bạn đăng nhập vào bất kỳ máy chủ vật lý hoặc ảo nào bằng cách sử dụng lệnh thực thi từ máy chủ mà vùng chứa đang chạy:
+![image](https://user-images.githubusercontent.com/83932775/129451401-ab431d64-93d7-43a4-aae8-20085b02f01c.png)
+
+Để dừng và loại bỏ một vùng chứa đang chạy, bạn có thể gọi nó bằng tên của nó:
+![image](https://user-images.githubusercontent.com/83932775/129451419-85d81236-31d2-45b1-ace1-8e21fe13f7c1.png)
+Bây giờ nếu bạn nhìn lại các tiến trình đang chạy, bạn có thể thấy rằng nó đã biến mất.
+![image](https://user-images.githubusercontent.com/83932775/129451434-7e750488-df74-4315-abd6-1b4e8e917335.png)
+
+## Save a Docker Image to a Registry
+
+Bây giờ bạn đã biết cách tạo và sử dụng hình ảnh của mình, đã đến lúc bạn nên cung cấp cho người khác sử dụng. Một cách để làm điều này là lưu trữ nó trong sổ đăng ký hình ảnh.
+
+Theo mặc định, Docker sử dụng sổ đăng ký Docker Hub, mặc dù bạn có thể tạo và sử dụng sổ đăng ký của riêng mình. Bạn sẽ cần bắt đầu bằng cách đăng nhập vào sổ đăng ký:
