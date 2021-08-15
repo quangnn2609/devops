@@ -349,3 +349,19 @@ Trong ví dụ này, thẻ có thể là v1, như được hiển thị ở đâ
 
 ![image](https://user-images.githubusercontent.com/83932775/129455029-9c81e3bc-b914-47e1-8b2f-432193685378.png)
 
+## Create a Development Environment
+
+Như bạn có thể nhớ lại, có bốn môi trường khác nhau trong một quy trình làm việc điển hình:
+
+* Môi trường phát triển
+* Môi trường thử nghiệm
+* Môi trường dàn dựng
+* Môi trường sản xuất
+
+Bắt đầu bằng cách tạo ra môi trường phát triển.
+
+Môi trường phát triển có nghĩa là thuận tiện cho nhà phát triển; nó chỉ cần phù hợp với môi trường sản xuất nơi nó có liên quan. Ví dụ: nếu nhà phát triển đang làm việc trên chức năng không liên quan gì đến cơ sở dữ liệu, thì môi trường phát triển không cần bản sao của cơ sở dữ liệu sản xuất hoặc bất kỳ cơ sở dữ liệu nào.
+
+Một môi trường phát triển điển hình có thể bao gồm bất kỳ số lượng công cụ nào, từ Môi trường phát triển tích hợp (IDE) như Eclipse đến cơ sở dữ liệu đến lưu trữ đối tượng. Phần quan trọng ở đây là nó phải thoải mái cho nhà phát triển.
+
+Trong trường hợp này, bạn sẽ xây dựng một ứng dụng Python đơn giản với các công cụ có sẵn từ dòng lệnh cơ bản, Bash. Bạn cũng có thể sử dụng Bash để thực hiện các tác vụ thử nghiệm và triển khai, vì vậy hãy bắt đầu với bản làm mới Bash.
