@@ -287,21 +287,21 @@ Lưu ý rằng giữa các bước như thực hiện một lệnh, Docker thự
 
 Trong ví dụ trước, chỉ một số lượng nhỏ lệnh Dockerfile có sẵn được sử dụng. Danh sách đầy đủ có sẵn trong tài liệu Docker trong tham chiếu Dockerfile. Hiện tại, một danh sách các lệnh có sẵn trông giống như sau:
 
-FROM
-MAINTAINER
-RUN
-CMD
-EXPOSE
-ENV
-COPY
-ENTRYPOINT
-VOLUME
-USER
-WORKDIR
-ARG
-ONBUILD
-STOPSIGNAL
-LABEL
+* FROM
+* MAINTAINER
+* RUN
+* CMD
+* EXPOSE
+* ENV
+* COPY
+* ENTRYPOINT
+* VOLUME
+* USER
+* WORKDIR
+* ARG
+* ONBUILD
+* STOPSIGNAL
+* LABEL
 
 Nhập **docker images** để xem danh sách các image. Lưu ý rằng thực tế có hai image hiện đã được lưu vào bộ nhớ đệm trên máy. Đầu tiên là image Python, mà bạn đã sử dụng làm cơ sở của mình. Docker đã lưu trữ nó để nếu bạn muốn xây dựng lại image của mình, bạn sẽ không phải tải xuống lại.
 
