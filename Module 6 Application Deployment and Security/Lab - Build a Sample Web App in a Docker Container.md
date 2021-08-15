@@ -40,6 +40,7 @@ Nhập một số lệnh bash đơn giản cho tập lệnh của bạn. Các l�
 ![image](https://user-images.githubusercontent.com/83932775/129484649-904524ca-f3a0-4e04-b16c-c84bb194fe35.png)
 ### Step 7: Change the mode of the script to an executable file for all users.
 Thay đổi chế độ của tập lệnh thành tập lệnh thực thi bằng lệnh chmod. Đặt các tùy chọn thành a + x executable (x) có thể thực thi bởi tất cả người dùng all users (a). Sau khi sử dụng chmod, quyền đã được sửa đổi cho người dùng, nhóm và những người khác để bao gồm "x" (có thể thực thi).
+
 ![image](https://user-images.githubusercontent.com/83932775/129486475-b01eaebd-39f2-4462-843d-583aa657b854.png)
 ### Step 8: Rename the file to remove the .sh extension.
 Bạn có thể đổi tên tệp để loại bỏ phần mở rộng để người dùng không phải thêm .sh vào lệnh để thực thi tập lệnh.
