@@ -1,10 +1,15 @@
 # Mục tiêu
-**Phần 1: Khởi chạy máy ảo DEVASC
-Phần 2: Tạo một tập lệnh Bash đơn giản
-Phần 3: Tạo một ứng dụng web mẫu
-Phần 4: Định cấu hình ứng dụng web để sử dụng tệp trang web
-Phần 5: Tạo tập lệnh Bash để xây dựng và chạy vùng chứa Docker
-Phần 6: Xây dựng, chạy và xác minh vùng chứa Docker**
+**Phần 1: Khởi chạy máy ảo DEVAS**
+
+**Phần 2: Tạo một tập lệnh Bash đơn giản**
+
+**Phần 3: Tạo một ứng dụng web mẫu**
+
+**Phần 4: Định cấu hình ứng dụng web để sử dụng tệp trang web**
+
+**Phần 5: Tạo tập lệnh Bash để xây dựng và chạy vùng chứa Docker**
+
+**Phần 6: Xây dựng, chạy và xác minh vùng chứa Docker**
 
 # Bối cảnh / Kịch bản
 
