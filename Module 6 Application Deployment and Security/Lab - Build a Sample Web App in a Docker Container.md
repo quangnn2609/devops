@@ -53,6 +53,7 @@ Bạn có thể đổi tên tệp để loại bỏ phần mở rộng để ng�
 **mv user-input.sh user-input**
 ### Step 9: Execute the script from the command line.
 Bây giờ tập lệnh có thể được chạy từ dòng lệnh mà không cần lệnh nguồn hoặc phần mở rộng. Để chạy tập lệnh bash mà không có lệnh nguồn, bạn phải mở đầu tập lệnh bằng "./".
+
 ![image](https://user-images.githubusercontent.com/83932775/129511286-36419651-13e3-458c-b10c-ee6cc756f564.png)
 ### Step 10: Investigate other bash scripts.
 Nếu bạn có ít hoặc không có kinh nghiệm tạo tập lệnh bash, hãy dành chút thời gian để tìm kiếm trên internet các hướng dẫn về bash, ví dụ về bash và trò chơi bash.
