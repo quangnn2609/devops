@@ -141,3 +141,5 @@ Một ứng dụng có thể được triển khai trên một máy chủ bare m
 * Khởi động vùng chứa và xác minh rằng nó đang chạy
 
 ### Bước 1: Tạo các thư mục tạm thời để lưu trữ các tập tin của trang web.
+
+Mở tệp script bash sample-app.sh trong thư mục ~/labs/devnet-src/sample-app. Thêm ‘she-bang’ và các lệnh để tạo cấu trúc thư mục với tempdir là thư mục cha.
