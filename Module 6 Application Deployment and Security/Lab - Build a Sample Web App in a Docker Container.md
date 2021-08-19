@@ -143,3 +143,87 @@ Một ứng dụng có thể được triển khai trên một máy chủ bare m
 ### Bước 1: Tạo các thư mục tạm thời để lưu trữ các tập tin của trang web.
 
 Mở tệp script bash sample-app.sh trong thư mục ~/labs/devnet-src/sample-app. Thêm ‘she-bang’ và các lệnh để tạo cấu trúc thư mục với tempdir là thư mục cha.
+![image](https://user-images.githubusercontent.com/83932775/129857484-52a12ff3-7866-4970-823c-5a3f142db884.png)
+
+### Bước 2: Sao chép các thư mục trang web và sample_app.py vào thư mục tạm thời.
+Trong tệp sample-app.sh, hãy thêm các lệnh để sao chép thư mục trang web và tập lệnh vào tempdir.
+![image](https://user-images.githubusercontent.com/83932775/129857898-bdebe739-939b-4f43-8881-001edd25b9d9.png)
+
+### Bước 3: Tạo Dockerfile.
+Trong bước này, bạn nhập các lệnh **echo** bash cần thiết vào tệp **sample-app.sh** để tạo Dockerfile trong **tempdir**. Dockerfile này sẽ được sử dụng để xây dựng vùng chứa.
+
+a. Bạn cần Python chạy trong vùng chứa, vì vậy hãy thêm lệnh Docker **FROM** để cài đặt Python trong vùng chứa.
+![image](https://user-images.githubusercontent.com/83932775/129875478-afbdb0ee-9d16-4e2f-bdb2-38fec1c67a8d.png)
+
+b. Tập lệnh **sample_app.py** của bạn cần có Flask, vì vậy hãy thêm lệnh Docker **RUN** để cài đặt Flask trong vùng chứa.
+![image](https://user-images.githubusercontent.com/83932775/129901933-48175cb7-f0f0-4ebf-8f77-5fe2cbf3eea6.png)
+
+c. Vùng chứa của bạn sẽ cần các thư mục trang web và tập lệnh **sample_app.py** để chạy ứng dụng, vì vậy hãy thêm các lệnh Docker **COPY** để thêm chúng vào một thư mục trong vùng chứa Docker. Trong ví dụ này, bạn sẽ tạo **/home/myapp** làm thư mục cha bên trong vùng chứa Docker. Bên cạnh việc sao chép tệp sample_app.py vào Dockerfile, bạn cũng sẽ sao chép tệp index.html từ thư mục mẫu và tệp style.css từ thư mục tĩnh.
+
+![image](https://user-images.githubusercontent.com/83932775/130027764-e78876d7-cad9-4371-895f-8e6052857b34.png)
+
+d. Sử dụng lệnh Docker **EXPOSE** để public cổng 8080 trên máy chủ web sử dụng.
+![image](https://user-images.githubusercontent.com/83932775/130030823-553cc110-9f2c-46e5-8598-23e9cd7fed72.png)
+
+e. Cuối cùng, thêm lệnh Docker **CMD** để thực thi tập lệnh Python
+![image](https://user-images.githubusercontent.com/83932775/130031343-001b39d9-cfa5-4ed0-900b-958e7f85300c.png)
+
+![image](https://user-images.githubusercontent.com/83932775/130032120-4bb33428-314b-4e81-a51a-dbb5cb734fdf.png)
+
+
+### Bước 4: Xây dựng vùng chứa Docker.
+Thêm các lệnh vào tệp **sample-app.sh** để chuyển sang thư mục **tempdir** và xây dựng vùng chứa Docker. Tùy chọn **docker build** command **-t** cho phép bạn chỉ định tên của vùng chứa và dấu chấm (.) Cho biết rằng bạn muốn vùng chứa được xây dựng trong thư mục hiện tại.
+
+![image](https://user-images.githubusercontent.com/83932775/130034250-453b118c-0a1b-42ba-bc3f-9f8a9f566afd.png)
+
+![image](https://user-images.githubusercontent.com/83932775/130034292-c8e5fa61-1009-42bf-9fba-bf60d944baca.png)
+
+### Bước 5: Khởi động vùng chứa và xác minh rằng nó đang chạy.
+
+a. Thêm lệnh **docker run** vào tệp **sample-app.sh** để khởi động vùng chứa.
+
+![image](https://user-images.githubusercontent.com/83932775/130035298-e1bc5086-fc8a-4add-8344-97c0a0b10ee2.png)
+
+Các tùy chọn docker run chỉ ra những điều sau:
+
+* **-t** chỉ định rằng bạn muốn một terminal được tạo cho vùng chứa để bạn có thể truy cập nó tại dòng lệnh.
+* **-d** chỉ ra rằng bạn muốn vùng chứa chạy trong background và in ID vùng chứa khi thực hiện lệnh **docker ps -a**.
+* **-p** chỉ định rằng bạn muốn public cổng nội bộ của vùng chứa lên máy chủ. "8080" đầu tiên tham chiếu đến cổng cho ứng dụng đang chạy trong bộ chứa docker (sample app). "8080" thứ hai yêu cầu docker sử dụng cổng này trên máy chủ. Các giá trị này không nhất thiết phải giống nhau. Ví dụ, một cổng bên trong 80 đến bên ngoài 800 (**80: 800**).
+* **--name** chỉ định trước tiên những gì bạn muốn gọi đối tượng của vùng chứa (**samplerunning**) và sau đó là hình ảnh vùng chứa mà thể hiện sẽ dựa trên (**sampleapp**). Tên cá thể có thể là bất cứ thứ gì bạn muốn. Tuy nhiên, tên hình ảnh cần phải khớp với tên vùng chứa mà bạn đã chỉ định trong lệnh xây dựng docker (**sampleapp**).
+
+b. Thêm lệnh **docker ps -a** để hiển thị tất cả các vùng chứa Docker hiện đang chạy. Lệnh này sẽ là lệnh cuối cùng được thực thi bởi tập lệnh bash.
+![image](https://user-images.githubusercontent.com/83932775/130083713-072caa2b-377b-4399-9c62-33facf18f35e.png)
+
+### Bước 6: Lưu tập lệnh bash của bạn.
+## Part 6: Build, Run, and Verify the Docker Container
+
+Trong phần này, bạn sẽ thực thi tập lệnh bash sẽ tạo các thư mục, sao chép qua các tệp, tạo Dockerfile, xây dựng vùng chứa Docker, chạy một phiên bản của vùng chứa Docker và hiển thị đầu ra từ lệnh **docker ps -a** hiển thị chi tiết của vùng chứa hiện đang chạy. Sau đó, bạn sẽ điều tra vùng chứa Docker, ngừng chạy vùng chứa và loại bỏ vùng chứa.
+
+**Lưu ý:** Đảm bảo rằng bạn đã dừng bất kỳ quy trình máy chủ web nào khác mà bạn có thể vẫn đang chạy từ các phần trước của phòng thí nghiệm này.
+
+### Bước 1: Thực hiện bash script.
+
+Thực thi tập lệnh bash từ dòng lệnh. Bạn sẽ thấy đầu ra tương tự như sau. Sau khi tạo các thư mục **tempdir**, tập lệnh thực hiện các lệnh để xây dựng vùng chứa Docker. Lưu ý rằng Bước 7/7 trong đầu ra thực thi **sample_app.py****** tạo máy chủ web. Ngoài ra, hãy chú ý đến ID vùng chứa. Bạn sẽ thấy điều này trong dấu nhắc lệnh Docker sau này trong phòng thí nghiệm.
+
+![image](https://user-images.githubusercontent.com/83932775/130102861-8deb05b0-7897-4f48-b0ac-4d34d5056eba.png)
+### Bước 2: Điều tra vùng chứa Docker đang chạy và ứng dụng web.
+
+a. Việc tạo các thư mục **tempdir** không được hiển thị trong đầu ra cho tập lệnh. Bạn có thể thêm lệnh echo để in ra các tin nhắn khi chúng được tạo thành công. Bạn cũng có thể xác minh rằng họ có ở đó.
+
+![image](https://user-images.githubusercontent.com/83932775/130103637-89c9bb72-d5d9-4124-a059-3706e6619b46.png)
+b. Lưu ý Dockerfile được tạo bởi tập lệnh bash của bạn. Mở tệp này để xem nó trông như thế nào ở dạng cuối cùng mà không có lệnh echo.
+
+![image](https://user-images.githubusercontent.com/83932775/130104374-624a4aab-8380-472e-bde8-1381117b298a.png)
+
+c. Đầu ra cho lệnh ps -a của docker có thể khó đọc tùy thuộc vào độ rộng của màn hình thiết bị đầu cuối của bạn. Bạn có thể chuyển hướng nó đến một tệp văn bản nơi bạn có thể xem nó tốt hơn mà không cần gói từ.
+
+![image](https://user-images.githubusercontent.com/83932775/130106117-ed5a6b11-8e2d-4b68-aaa6-7f000835b5e8.png)
+
+d. Vùng chứa Docker tạo địa chỉ IP của riêng nó từ không gian địa chỉ mạng riêng. Xác minh ứng dụng web đang chạy và báo cáo địa chỉ IP. Trong trình duyệt web tại **http://localhost:8080**, bạn sẽ thấy thông báo Bạn đang gọi cho tôi từ **172.17.0.1** được định dạng là H1 trên nền màu xanh thép nhạt. Bạn cũng có thể sử dụng lệnh **curl** nếu muốn.
+
+![image](https://user-images.githubusercontent.com/83932775/130115615-de09e0b8-2be9-42f2-b512-b734093b3c94.png)
+
+e. Theo mặc định, Docker sử dụng mạng con IPv4 172.17.0.0/16 cho mạng vùng chứa. (Địa chỉ này có thể được thay đổi nếu cần.) Nhập **ip address** để hiển thị tất cả các địa chỉ IP được sử dụng bởi phiên bản máy ảo DEVASC của bạn. Bạn sẽ thấy địa chỉ lặp lại 127.0.0.1 mà ứng dụng web đã sử dụng trước đó trong phòng thí nghiệm và giao diện Docker mới với địa chỉ IP 172.17.0.1.
+
+
+
