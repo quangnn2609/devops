@@ -365,3 +365,17 @@ Môi trường phát triển có nghĩa là thuận tiện cho nhà phát triể
 Một môi trường phát triển điển hình có thể bao gồm bất kỳ số lượng công cụ nào, từ Môi trường phát triển tích hợp (IDE) như Eclipse đến cơ sở dữ liệu đến lưu trữ đối tượng. Phần quan trọng ở đây là nó phải thoải mái cho nhà phát triển.
 
 Trong trường hợp này, bạn sẽ xây dựng một ứng dụng Python đơn giản với các công cụ có sẵn từ dòng lệnh cơ bản, Bash. Bạn cũng có thể sử dụng Bash để thực hiện các tác vụ thử nghiệm và triển khai, vì vậy hãy bắt đầu với bản làm mới Bash.
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# Continuous Integration/Continuous Deployment (CI/CD)
+
+## Introduction to CI/CD
+
+Tích hợp liên tục - Continuous Integration/Triển khai liên tục - Continuous Deployment (CI / CD) là một triết lý triển khai phần mềm nổi bật trong lĩnh vực DevOps. Bản thân DevOps là về giao tiếp và đảm bảo rằng tất cả các thành viên trong nhóm đang làm việc cùng nhau để đảm bảo hoạt động trơn tru.
+
+## Continuous Integration
+
+
+
+
