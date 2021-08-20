@@ -225,5 +225,38 @@ d. Vùng chứa Docker tạo địa chỉ IP của riêng nó từ không gian �
 
 e. Theo mặc định, Docker sử dụng mạng con IPv4 172.17.0.0/16 cho mạng vùng chứa. (Địa chỉ này có thể được thay đổi nếu cần.) Nhập **ip address** để hiển thị tất cả các địa chỉ IP được sử dụng bởi phiên bản máy ảo DEVASC của bạn. Bạn sẽ thấy địa chỉ lặp lại 127.0.0.1 mà ứng dụng web đã sử dụng trước đó trong phòng thí nghiệm và giao diện Docker mới với địa chỉ IP 172.17.0.1.
 
+![image](https://user-images.githubusercontent.com/83932775/130201665-d96f113f-36b5-4d33-887f-4a045d181cf0.png)
 
+### Bước 3: Truy cập và khám phá vùng chứa đang chạy.
+Hãy nhớ rằng vùng chứa Docker là một cách đóng gói mọi thứ bạn cần để chạy ứng dụng của mình để nó có thể dễ dàng được triển khai trong nhiều môi trường khác nhau - không chỉ trong máy ảo DEVASC của bạn.
+
+a. Để truy cập vùng chứa đang chạy, hãy nhập lệnh **docker execute -it** chỉ định tên của vùng chứa đang chạy (samplerunning) và bạn muốn có một trình bao bash (/ bin / bash). Tùy chọn -i chỉ định rằng bạn muốn nó tương tác và tùy chọn -t chỉ định rằng bạn muốn truy cập thiết bị đầu cuối. Lời nhắc thay đổi thành **root@containerID**. ID vùng chứa của bạn sẽ khác với ID được hiển thị bên dưới. Lưu ý rằng ID vùng chứa khớp với ID được hiển thị trong đầu ra từ **docker ps -a**.
+
+![image](https://user-images.githubusercontent.com/83932775/130203623-98e65fcb-ccd0-43c6-876b-9850e314d8a0.png)
+
+b. Bạn hiện có quyền truy cập root cho vùng chứa Docker samplerunning. Từ đây, bạn có thể sử dụng các lệnh Linux để khám phá vùng chứa Docker. Nhập ls để xem cấu trúc thư mục ở cấp cơ sở.
+
+![image](https://user-images.githubusercontent.com/83932775/130203853-cb63d28e-b003-44d0-9707-665adc99f1be.png)
+
+c. Nhớ lại rằng trong tập lệnh bash của bạn, bạn đã thêm các lệnh trong Dockerfile để sao chép các thư mục và tệp ứng dụng của bạn vào thư mục **home/myapp**. Nhập lại lệnh ls cho thư mục đó để xem tập lệnh và thư mục **sample_app.py** của bạn. Để hiểu rõ hơn về những gì được bao gồm trong vùng chứa Docker của bạn, bạn có thể sử dụng lệnh **ls** để kiểm tra các thư mục khác như /etc và /bin.
+
+![image](https://user-images.githubusercontent.com/83932775/130204353-f3b38f5f-1ea3-4716-98ad-380415246baf.png)
+
+d. Thoát khỏi vùng chứa Docker để quay lại dòng lệnh DEVASC VM
+
+![image](https://user-images.githubusercontent.com/83932775/130269452-3d82382c-a1c0-4f41-9f1a-b6a5ed869948.png)
+
+### Bước 4: Dừng và xóa vùng chứa Docker.
+
+a. Bạn có thể dừng vùng chứa Docker bằng lệnh **docker stop** chỉ định tên của vùng chứa đang chạy. Sẽ mất vài giây để dọn dẹp và lưu vào bộ nhớ cache. Bạn có thể thấy rằng nó vẫn tồn tại bằng cách nhập lệnh **docker ps -a**. Tuy nhiên, nếu bạn làm mới trang web cho http://localhost:8080, bạn sẽ thấy ứng dụng web không còn chạy nữa.
+
+![image](https://user-images.githubusercontent.com/83932775/130273566-086dd926-17fc-44d7-b146-f0951670c9c5.png)
+
+b. Bạn có thể khởi động lại vùng chứa đã dừng bằng docker start. Thùng chứa sẽ ngay lập tức quay lên.
+
+![image](https://user-images.githubusercontent.com/83932775/130273910-346b2a03-b280-4620-abe5-86df48073e21.png)
+
+c. Để xóa vĩnh viễn vùng chứa, trước tiên hãy dừng nó và sau đó xóa nó bằng lệnh docker rm. Bạn luôn có thể xây dựng lại nó một lần nữa khi thực hiện chương trình sample-app. Sử dụng lệnh docker ps -a để xác minh vùng chứa đã được gỡ bỏ.
+
+![image](https://user-images.githubusercontent.com/83932775/130274077-8f4bc3a9-fe38-4408-a3d1-a0d6265afcff.png)
 
