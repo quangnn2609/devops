@@ -376,6 +376,61 @@ Tích hợp liên tục - Continuous Integration/Triển khai liên tục - Cont
 
 ## Continuous Integration
 
+Bạn đã bao giờ thực hiện nhiều công việc trên một ứng dụng và khi bạn cố gắng hợp nhất nó trở lại ứng dụng chính, có rất nhiều xung đột hợp nhất, bất kỳ xung đột nào trong số đó đều có khả năng tạo ra các lỗi lớn? Tích hợp liên tục nhằm loại bỏ vấn đề này.
 
+Ý tưởng đằng sau Tích hợp liên tục là bạn và tất cả các nhà phát triển khác trong dự án, liên tục hợp nhất các thay đổi của bạn với nhánh chính của ứng dụng hiện có. Điều này có nghĩa là bất kỳ tập hợp thay đổi nhất định nào đều nhỏ và khả năng xảy ra sự cố thấp. Nếu mọi người đang sử dụng nhánh chính, bất kỳ ai kiểm tra mã sẽ có phiên bản mới nhất của những gì mọi người khác đang phát triển.
 
+Là một phần của quá trình này, các nhà phát triển phải thực hiện kiểm tra rộng rãi và thường là tự động trên mã của họ trước khi hợp nhất trở lại chi nhánh chính. Làm điều này, ý tưởng là hầu hết các vấn đề đều được giải quyết trước khi chúng trở thành một vấn đề nghiêm trọng hơn.
 
+Quá trình Tích hợp Liên tục cung cấp một số lợi ích bổ sung, vì mọi cam kết đều tạo cơ hội cho hệ thống thực hiện các tác vụ bổ sung. Ví dụ: pipeline có thể được thiết lập để thực hiện các tác vụ sau:
+
+* Code compilation
+* Unit test execution
+* Static code analysis
+* Integration testing
+* Packaging and versioning
+* Publishing the version package to Docker Hub or other package repositories
+
+Lưu ý rằng có một số tình huống liên quan đến những thay đổi lớn và phức tạp, chẳng hạn như việc bổ sung các tính năng mới, trong đó các thay đổi phải được nhóm lại với nhau. Trong trường hợp này, mọi cam kết chỉ có thể kích hoạt một phần của đường ống CI, với các bước đóng gói và lập phiên bản chỉ chạy khi toàn bộ tính năng được hợp nhất với chính.
+
+Trong một số trường hợp, việc điều chỉnh theo cách làm việc này đòi hỏi sự thay đổi tư duy từ phía tổ chức hoặc từ phía các nhà phát triển cá nhân, những người có thể đã quen làm việc trong chi nhánh của chính họ hoặc trên các chi nhánh tính năng. Tuy nhiên, thay đổi này là cần thiết nếu bạn muốn đạt được bước tiếp theo: Phân phối liên tục, không hoàn toàn giống với Triển khai liên tục.
+
+**Continuous Delivery**
+
+Phân phối liên tục là quá trình phát triển với tốc độ đủ ngắn để mã luôn ở trạng thái có thể triển khai. Với Tích hợp liên tục, các tập hợp thay đổi nhỏ liên tục được tích hợp vào nhánh mã chính. Phân phối liên tục có nghĩa là những thay đổi đó được thiết kế để khép kín đến mức tại bất kỳ thời điểm nào, bạn có thể triển khai một ứng dụng đang hoạt động.
+
+Quá trình trông giống như sau:
+
+Bước 1. Bắt đầu với phiên bản tạo tác đã được tạo như một phần của quá trình Tích hợp liên tục.
+
+Bước 2. Tự động triển khai phiên bản ứng viên trên staging.
+
+Bước 3. Chạy các bài kiểm tra tích hợp, bài kiểm tra bảo mật, bài kiểm tra hiệu suất, bài kiểm tra quy mô hoặc các bài kiểm tra khác được xác định bởi nhóm hoặc tổ chức. Chúng được gọi là gating tests vì chúng xác định liệu phiên bản phần mềm này có thể được thúc đẩy thêm trong quá trình triển khai hay không.
+
+Bước 4. Nếu tất cả các thử nghiệm kiểm tra kiểm tra đều vượt qua, hãy gắn thẻ phiên bản này là phù hợp để sản xuất.
+
+Lưu ý rằng Phân phối liên tục không có nghĩa là bạn triển khai liên tục, quá trình đó được gọi là Triển khai liên tục. Phân phối liên tục đảm bảo rằng bạn luôn có một phiên bản mà bạn có thể triển khai.
+
+![image](https://user-images.githubusercontent.com/83932775/130328150-90bad66b-848b-4a14-83b9-ea2d199fab75.png)
+
+CI/CD là một quá trình tự động kiểm tra, ự động triển khai  và có thể bao gồm cả việc phân phối.
+
+Quá trình này cho chúng ta biết hai điều:
+
+* Bạn phải nghĩ trước về việc thử nghiệm. Trong mô-đun về Phát triển phần mềm, chúng tôi đã thảo luận về "Phát triển theo hướng kiểm tra - Test Driven Development" và ý tưởng chung là bạn viết các quy trình kiểm tra tự động có thể được chạy bởi cơ sở hạ tầng CI / CD.
+
+* Nếu một cái gì đó bị vỡ, mọi thứ sẽ dừng lại. Ý tưởng đằng sau khái niệm này là nếu một lỗi được phát hiện, tất cả các quá trình phát triển khác sẽ dừng lại cho đến khi nó được sửa, đưa hệ thống về trạng thái có thể triển khai. Điều này có thể được thực hiện thông qua việc tìm và sửa lỗi hoặc có thể hoàn thành bằng cách quay lại các thay đổi cho đến khi lỗi biến mất, nhưng phần quan trọng là hệ thống phải duy trì khả năng triển khai. Trên thực tế, hầu hết các tổ chức không thực sự tuân theo quy trình này, nhưng đó là ý tưởng chính đằng sau CI / CD.
+
+**Continuous Deployment**
+
+Triển khai liên tục là biểu hiện cuối cùng của CI / CD. Khi các thay đổi được thực hiện, kiểm tra, tích hợp với nhánh chính và kiểm tra lại, chúng sẽ được triển khai vào sản xuất bằng cách sử dụng tự động hóa. Điều này có nghĩa là mã đang được triển khai sản xuất liên tục, có nghĩa là người dùng của bạn sẽ là người thử nghiệm cuối cùng của bạn. Nói cách khác, Triển khai liên tục là một loại Phân phối liên tục đặc biệt, trong đó mọi bản dựng được đánh dấu là sẵn sàng cho sản xuất đều được triển khai.
+
+Một số tổ chức ưa chuộng kiểu triển khai này vì nó có nghĩa là người dùng luôn có mã cập nhật nhất. Hầu hết các tổ chức thực hiện một cách tiếp cận thận trọng hơn yêu cầu một con người đẩy mã vào sản xuất.
+
+**Ngăn ngừa tác động đến người dùng**
+
+Mặc dù chúng tôi cố gắng thực hiện kiểm tra rộng rãi như một phần của quy trình CI/CD, nhưng luôn có khả năng một bản dựng xấu sẽ vượt qua cửa ải. Để tránh ảnh hưởng đến người dùng hoặc ít nhất là để hạn chế tác động, bạn có thể sử dụng các chiến lược triển khai như:
+
+Nâng cấp lần lượt - Đây là phiên bản đơn giản nhất của Phân phối liên tục, trong đó các thay đổi được triển khai định kỳ theo cách mà chúng không ảnh hưởng đến người dùng hiện tại và không ai phải "cài đặt lại" phần mềm.
+Đường ống Canary - Trong trường hợp này, phiên bản mới được triển khai cho một nhóm nhỏ người dùng (hoặc máy chủ, tùy thuộc vào kiến ​​trúc). Nếu những người dùng này gặp sự cố, các thay đổi có thể được khôi phục dễ dàng. Nếu những người dùng này không gặp sự cố, các thay đổi sẽ được triển khai cho phần còn lại của quá trình sản xuất.
+Triển khai màu xanh lam - Trong trường hợp này, một môi trường hoàn toàn mới (Màu xanh lam) được tạo với mã mới trên đó, nhưng môi trường cũ (Màu xanh lá cây) được giữ ở trạng thái dự trữ. Nếu người dùng trên môi trường mới gặp sự cố, lưu lượng truy cập có thể được chuyển hướng trở lại môi trường ban đầu. Nếu không có vấn đề gì xảy ra trong một khoảng thời gian cụ thể, môi trường mới sẽ trở thành môi trường sản xuất và môi trường cũ được loại bỏ để sử dụng cho lần thay đổi tiếp theo.
