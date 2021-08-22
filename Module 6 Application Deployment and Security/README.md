@@ -413,7 +413,7 @@ Lưu ý rằng Phân phối liên tục không có nghĩa là bạn triển khai
 
 ![image](https://user-images.githubusercontent.com/83932775/130328150-90bad66b-848b-4a14-83b9-ea2d199fab75.png)
 
-CI/CD là một quá trình tự động kiểm tra, ự động triển khai  và có thể bao gồm cả việc phân phối.
+CI/CD là một quá trình tự động kiểm tra, tự động triển khai  và có thể bao gồm cả việc phân phối.
 
 Quá trình này cho chúng ta biết hai điều:
 
@@ -423,7 +423,7 @@ Quá trình này cho chúng ta biết hai điều:
 
 **Continuous Deployment**
 
-Triển khai liên tục là biểu hiện cuối cùng của CI / CD. Khi các thay đổi được thực hiện, kiểm tra, tích hợp với nhánh chính và kiểm tra lại, chúng sẽ được triển khai vào sản xuất bằng cách sử dụng tự động hóa. Điều này có nghĩa là mã đang được triển khai sản xuất liên tục, có nghĩa là người dùng của bạn sẽ là người thử nghiệm cuối cùng của bạn. Nói cách khác, Triển khai liên tục là một loại Phân phối liên tục đặc biệt, trong đó mọi bản dựng được đánh dấu là sẵn sàng cho sản xuất đều được triển khai.
+Triển khai liên tục là biểu hiện cuối cùng của CI/CD. Khi các thay đổi được thực hiện, kiểm tra, tích hợp với nhánh chính và kiểm tra lại, chúng sẽ được triển khai vào sản xuất bằng cách sử dụng tự động hóa. Điều này có nghĩa là mã đang được triển khai sản xuất liên tục, có nghĩa là người dùng của bạn sẽ là người thử nghiệm cuối cùng của bạn. Nói cách khác, Triển khai liên tục là một loại Phân phối liên tục đặc biệt, trong đó mọi bản dựng được đánh dấu là sẵn sàng cho sản xuất đều được triển khai.
 
 Một số tổ chức ưa chuộng kiểu triển khai này vì nó có nghĩa là người dùng luôn có mã cập nhật nhất. Hầu hết các tổ chức thực hiện một cách tiếp cận thận trọng hơn yêu cầu một con người đẩy mã vào sản xuất.
 
@@ -431,6 +431,178 @@ Một số tổ chức ưa chuộng kiểu triển khai này vì nó có nghĩa 
 
 Mặc dù chúng tôi cố gắng thực hiện kiểm tra rộng rãi như một phần của quy trình CI/CD, nhưng luôn có khả năng một bản dựng xấu sẽ vượt qua cửa ải. Để tránh ảnh hưởng đến người dùng hoặc ít nhất là để hạn chế tác động, bạn có thể sử dụng các chiến lược triển khai như:
 
-Nâng cấp lần lượt - Đây là phiên bản đơn giản nhất của Phân phối liên tục, trong đó các thay đổi được triển khai định kỳ theo cách mà chúng không ảnh hưởng đến người dùng hiện tại và không ai phải "cài đặt lại" phần mềm.
-Đường ống Canary - Trong trường hợp này, phiên bản mới được triển khai cho một nhóm nhỏ người dùng (hoặc máy chủ, tùy thuộc vào kiến ​​trúc). Nếu những người dùng này gặp sự cố, các thay đổi có thể được khôi phục dễ dàng. Nếu những người dùng này không gặp sự cố, các thay đổi sẽ được triển khai cho phần còn lại của quá trình sản xuất.
-Triển khai màu xanh lam - Trong trường hợp này, một môi trường hoàn toàn mới (Màu xanh lam) được tạo với mã mới trên đó, nhưng môi trường cũ (Màu xanh lá cây) được giữ ở trạng thái dự trữ. Nếu người dùng trên môi trường mới gặp sự cố, lưu lượng truy cập có thể được chuyển hướng trở lại môi trường ban đầu. Nếu không có vấn đề gì xảy ra trong một khoảng thời gian cụ thể, môi trường mới sẽ trở thành môi trường sản xuất và môi trường cũ được loại bỏ để sử dụng cho lần thay đổi tiếp theo.
+* Rolling upgrade (Nâng cấp lần lượt) - Đây là phiên bản đơn giản nhất của Phân phối liên tục, trong đó các thay đổi được triển khai định kỳ theo cách mà chúng không ảnh hưởng đến người dùng hiện tại và không ai phải "cài đặt lại" phần mềm.
+* Canary pipeline (Đường ống Canary) - Trong trường hợp này, phiên bản mới được triển khai cho một nhóm nhỏ người dùng (hoặc máy chủ, tùy thuộc vào kiến trúc). Nếu những người dùng này gặp sự cố, các thay đổi có thể được khôi phục dễ dàng. Nếu những người dùng này không gặp sự cố, các thay đổi sẽ được triển khai cho phần còn lại của quá trình sản xuất.
+* Blue-green deployment (Triển khai màu xanh lam) - Trong trường hợp này, một môi trường hoàn toàn mới (Màu xanh lam) được tạo với mã mới trên đó, nhưng môi trường cũ (Màu xanh lá cây) được giữ ở trạng thái dự trữ. Nếu người dùng trên môi trường mới gặp sự cố, lưu lượng truy cập có thể được chuyển hướng trở lại môi trường ban đầu. Nếu không có vấn đề gì xảy ra trong một khoảng thời gian cụ thể, môi trường mới sẽ trở thành môi trường sản xuất và môi trường cũ được loại bỏ để sử dụng cho lần thay đổi tiếp theo.
+
+## CI/CD Benefits
+
+Các công ty sẵn sàng thực hiện một thay đổi có vẻ “mạnh mẽ” như vậy trong quy trình của họ vì những lợi ích đi kèm với việc sử dụng CI / CD để phát triển. Những lợi ích này bao gồm:
+
+* Integration with agile methodologies - Phát triển nhanh được xây dựng dựa trên ý tưởng về những lần chạy nước rút ngắn, sau đó nhóm nhà phát triển cung cấp một ứng dụng chức năng với một số tập hợp con các tính năng được yêu cầu. CI / CD hoạt động trong cùng một khuôn khổ chạy nước rút ngắn đó. Mỗi cam kết là một phiên bản của khái niệm “ deliver a working version of the software - cung cấp một phiên bản hoạt động của phần mềm”.
+* Shorter Mean Time To Resolution (Thời gian trung bình ngắn hơn để giải quyết MTTR) - Bởi vì các tập hợp thay đổi nhỏ, việc cô lập các lỗi khi chúng xảy ra sẽ dễ dàng hơn nhiều và sửa chữa chúng hoặc khôi phục chúng và giải quyết mọi vấn đề.
+* Automated deployment (Triển khai tự động) - Với thử nghiệm tự động và triển khai có thể dự đoán được, khả năng triển khai tự động sẽ mang lại. Điều này có nghĩa là có thể sử dụng các chiến lược triển khai như triển khai đường ống phát hành canary, trong đó một nhóm người dùng nhận được bộ tính năng mới và phần còn lại nhận bộ tính năng cũ. Quá trình này cho phép bạn kiểm tra trực tiếp tính năng mới để đảm bảo tính năng này hoạt động như mong đợi trước khi triển khai cho toàn bộ cơ sở người dùng.
+* Less disruptive feature releases (Các bản phát hành tính năng ít gây gián đoạn hơn) - Với việc tiến hành phát triển theo từng phần nhỏ luôn dẫn đến tạo tác có thể triển khai, có thể cung cấp cho người dùng những thay đổi gia tăng hơn là những thay đổi quy mô lớn có thể làm mất phương hướng của người dùng.
+* Improved quality (Chất lượng được cải thiện) - Tất cả những lợi ích này sẽ tạo nên phần mềm chất lượng cao hơn vì nó đã được kiểm tra kỹ lưỡng trước khi áp dụng trên diện rộng. Và bởi vì giải quyết lỗi dễ dàng hơn, nó có nhiều khả năng được xử lý kịp thời hơn là cộng dồn nợ kỹ thuật.
+* Improved time to market (Cải thiện thời gian đưa ra thị trường) - Bởi vì các tính năng có thể được triển khai riêng lẻ, chúng có thể được cung cấp cho người dùng nhanh hơn nhiều so với việc chúng phải được triển khai tất cả cùng một lúc.
+
+## Example Build Job for Jenkins
+
+Lưu ý: Các bước hiển thị trong phần còn lại của chủ đề này chỉ dành cho mục đích hướng dẫn. Các chi tiết bổ sung mà bạn cần để hoàn thành các lệnh này trong máy ảo DEVASC của bạn không được cung cấp. Tuy nhiên, bạn sẽ hoàn thành các bước tương tự trong phòng thí nghiệm _Build a CI/CD Pipeline Using Jenkins_ ở phần sau của chủ đề.
+
+Trong phần này, chúng tôi hiển thị một đường ống triển khai, thường được tạo bằng một công cụ xây dựng như Jenkins. Các đường ống này có thể xử lý các tác vụ như thu thập và biên dịch mã nguồn, thử nghiệm và biên dịch các tạo tác như tệp tar hoặc các gói khác. Tất cả các ví dụ này hiển thị ảnh chụp màn hình từ máy chủ Jenkins hiện có.
+
+**Example build job for Jenkins**
+
+Đơn vị cơ bản của Jenkins là project - dự án, còn được gọi là job - công việc. Bạn có thể tạo các công việc thực hiện mọi thứ, từ truy xuất mã từ kho quản lý mã nguồn như GitHub, đến xây dựng ứng dụng bằng tập lệnh hoặc công cụ xây dựng, đóng gói và chạy nó trên máy chủ.
+
+Đây là một công việc đơn giản lấy phiên bản của ứng dụng mẫu từ GitHub và chạy tập lệnh xây dựng. Sau đó, bạn thực hiện công việc thứ hai là kiểm tra bản dựng để đảm bảo rằng nó đang hoạt động bình thường.
+
+Đầu tiên, tạo Mục mới trong giao diện Jenkins bằng cách nhấp vào liên kết "create new jobs" trên trang chào mừng:
+
+![image](https://user-images.githubusercontent.com/83932775/130353191-93bdb015-bf7f-4e43-900c-9fd6329d0f14.png)
+
+Nhập tên, chọn Freestyle project (sao cho linh hoạt nhất) và bấm OK.
+
+![image](https://user-images.githubusercontent.com/83932775/130353216-0ffa7135-c32a-4f4c-8999-b3073ec89c8f.png)
+
+Cuộn xuống Quản lý mã nguồn và chọn Git, sau đó nhập URL kho lưu trữ GitHub cho URL kho lưu trữ. Thông thường, đây là một kho lưu trữ mà bạn có quyền ghi để bạn có thể nhận các tập lệnh được hợp nhất vào. Tốt nhất là lưu trữ các tập lệnh xây dựng trong chính kho lưu trữ và sử dụng kiểm soát phiên bản trên tập lệnh.
+
+![image](https://user-images.githubusercontent.com/83932775/130353249-1a60831b-82cc-4b47-b96b-092649550ad7.png)
+
+Bây giờ cuộn xuống Build và nhấp vào Add Build Step. Chọn Execute shell.
+
+![image](https://user-images.githubusercontent.com/83932775/130353271-b6732bd7-18a6-4cf2-afe3-def3d58dfdd9.png)
+
+Trong Command box, thêm lệnh:
+
+![image](https://user-images.githubusercontent.com/83932775/130358164-63459253-99f6-4caa-8a04-821d0697376f.png)
+
+Tập lệnh này dự định là một phần của repo và được tải xuống như một bước đầu tiên. Từ đây, bạn có thể sử dụng một hành động sau xây dựng để chạy một công việc khác, nhưng bạn sẽ phải tạo nó trước. Nhấp vào Lưu để tiếp tục.
+
+![image](https://user-images.githubusercontent.com/83932775/130358326-14d672bd-15cb-40e8-9c62-a6a83de197dc.png)
+
+Ở phía bên trái, nhấp vào **Build Now** để bắt đầu công việc.
+
+![image](https://user-images.githubusercontent.com/83932775/130363425-dfb3131c-c846-41be-8575-8d7a541a4cef.png)
+
+Bạn có thể thấy công việc đang chạy ở cột bên trái. Di chuyển chuột qua số bản dựng để nhận menu kéo xuống bao gồm liên kết đến Console output.
+
+![image](https://user-images.githubusercontent.com/83932775/130363477-aebc113d-1bc1-4b1b-a7a4-a3b120c1e5ce.png)
+
+Nhấp vào liên kết Jenkins và New item để bắt đầu một công việc mới, sau đó tạo một công việc Tự do khác, lần này được gọi là TestAppJob. Lần này, hãy để Quản lý mã nguồn là Không có vì bạn đã làm tất cả những điều đó trong công việc trước đó. Nhưng bạn có tùy chọn đặt Trình kích hoạt bản dựng để công việc này chạy ngay sau công việc trước đó, BuildAppJob.
+
+![image](https://user-images.githubusercontent.com/83932775/130363863-41a73ee6-c3ea-4f6c-9d68-e45057711c68.png)
+
+Tiếp theo, cuộn xuống và thêm một lần nữa tập lệnh shell Build Step of Execute.
+
+Thêm tập lệnh sau làm lệnh, sử dụng địa chỉ IP của máy chủ Jenkins mẫu. (Trong trường hợp này, nó được thiết lập cục bộ.)
+
+![image](https://user-images.githubusercontent.com/83932775/130363884-fbfc7d51-0412-463e-9eb4-fd1649373658.png)
+
+![image](https://user-images.githubusercontent.com/83932775/130363895-673fb28e-f721-41d1-88fe-109a1f3466b4.png)
+
+Lấy ví dụ này từng bước, trước tiên, hãy kiểm tra xem một điều kiện có đúng không. Điều kiện đó là liệu đầu ra của việc gọi URL kiểm tra có trả lại cho bạn văn bản có nội dung "Bạn đang gọi cho tôi từ" hay không, theo sau là địa chỉ IP của bạn. Hãy nhớ rằng, quy trình đang chạy trên máy chủ Jenkins, vì vậy đó là địa chỉ IP mà bạn muốn trong tập lệnh của mình.
+
+Nếu điều đó trở lại chính xác, hãy thoát với mã 0, có nghĩa là không có lỗi. Điều này có nghĩa là tập lệnh xây dựng đã thành công. Nếu nó không quay trở lại chính xác, hãy thoát với giá trị 1, điều này báo hiệu lỗi.
+
+Tiếp theo, bạn sẽ nhìn vào đầu ra của bảng điều khiển để xem kết quả.
+
+Bây giờ, hãy tập hợp những công việc này lại với nhau thành một đường ống.
+
+## Example Pipeline in Jenkins
+
+Bây giờ bạn đã thấy hai công việc này được xây dựng như thế nào, hãy xem cách xây dựng một đường ống thực tế. Ví dụ này hiển thị Mục mới thứ ba và lần này Đường ống là loại được chọn.
+
+![image](https://user-images.githubusercontent.com/83932775/130363970-7ad20faa-5f6b-44f7-b39d-65427ee8f64d.png)
+
+Bạn sẽ nhận thấy rằng bạn có một số cách khác nhau để kích hoạt một đường dẫn, nhưng trong trường hợp này, chỉ cần kích hoạt nó theo cách thủ công.
+
+![image](https://user-images.githubusercontent.com/83932775/130363988-9502bbb8-19e2-422f-be01-cdb0a0a1358f.png)
+
+Nhìn vào phần đường ống, cuộn xuống.
+
+![image](https://user-images.githubusercontent.com/83932775/130363998-b41e091b-62f4-4f7d-9d2c-a788957c7836.png)
+
+Mã này có thể đi vào hộp tập lệnh:
+
+![image](https://user-images.githubusercontent.com/83932775/130364053-5f635b2b-878c-4106-94af-18993028e489.png)
+
+Nhìn vào từng bước một. Đầu tiên, bạn đang thực hiện đường dẫn này trên một nút duy nhất. Bản thân quy trình này có ba giai đoạn, Chuẩn bị, Xây dựng và Kết quả. Các giai đoạn này được chạy tuần tự. Nếu giai đoạn đầu không thành công, đường ống sẽ dừng lại.
+
+Sử dụng giai đoạn Chuẩn bị để dừng và tháo hộp chứa nếu nó đã chạy. Nếu chưa có vùng chứa đang chạy, bạn sẽ gặp lỗi, vì vậy hãy đặt tập lệnh để bắt bất kỳ lỗi nào và trả về giá trị “SUCCESS”. Bằng cách này, đường ống tiếp tục hoạt động.
+
+Giai đoạn tiếp theo (giai đoạn Xây dựng) bạn có thể chỉ cần gọi BuildAppJob. Nếu thành công, bạn sẽ chuyển sang gọi TestAppJob. Kết quả của TestAppJob sẽ xác định liệu bản thân đường ống thành công hay thất bại. Nhấp vào lưu và Xây dựng ngay để chạy đường dẫn.
+
+![image](https://user-images.githubusercontent.com/83932775/130364180-25568361-e56d-46b3-8b7a-b59bcb2d67e2.png)
+
+Mỗi lần bạn xây dựng đường ống, bạn sẽ thấy sự thành công hay thất bại của từng giai đoạn. Nếu bạn gặp lỗi, bạn có thể dễ dàng xem điều gì đang xảy ra bằng cách di chuột qua giai đoạn vi phạm:
+
+![image](https://user-images.githubusercontent.com/83932775/130364199-edd44281-9074-45d8-b9c5-307f5f176459.png)
+
+Bây giờ, tất cả các công việc xây dựng và các phần đường ống đã kết hợp với nhau dưới dạng các thành phần CI / CD trong một dòng để hoàn thành một tập hợp các công việc hoặc tập lệnh. Mặc dù đây là một ví dụ đơn giản, nhưng nó có thể hữu ích khi bạn muốn kiểm tra các công việc xây dựng của người khác hoặc bắt đầu xây dựng đường ống CI / CD của riêng bạn.
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# Networks for Application Development and Security
+
+## Introduction
+
+Ngày nay, bạn phải tính đến mạng cho tất cả trừ các trường hợp sử dụng đơn giản nhất. Điều này đặc biệt đúng khi nói đến việc triển khai đám mây và vùng chứa. Dưới đây là một số ứng dụng bạn cần xem xét khi triển khai đám mây:
+
+* Tường lửa
+* Cân bằng tải
+* DNS
+* Reverse proxy
+
+## Firewall
+
+Tường lửa là biện pháp bảo vệ cơ bản nhất của máy tính chống lại sự truy cập trái phép của các cá nhân hoặc ứng dụng. Chúng có thể có bất kỳ hình thức nào, từ thiết bị phần cứng chuyên dụng đến cài đặt trong hệ điều hành của máy tính cá nhân.
+
+Ở cấp độ cơ bản nhất, tường lửa chấp nhận hoặc từ chối các gói dựa trên địa chỉ IP và cổng mà chúng được định địa chỉ. Ví dụ, hãy xem xét một máy chủ web. Máy chủ này có trên đó là phần mềm máy chủ web thực tế, cũng như ứng dụng đại diện cho trang web và cơ sở dữ liệu chứa nội dung mà trang web hiển thị. Nếu không có tường lửa, máy chủ có thể được truy cập theo nhiều cách:
+
+![image](https://user-images.githubusercontent.com/83932775/130364495-69122694-7d52-4447-9bb7-a41ca2036afa.png)
+
+* Trình duyệt web có thể truy cập ứng dụng web bằng yêu cầu HTTP đến cổng 80 hoặc yêu cầu HTTPS đến cổng 443
+* Máy khách cơ sở dữ liệu có thể truy cập cơ sở dữ liệu với yêu cầu UDP đến cổng 5000
+* Máy khách SSH có thể tự đăng nhập vào máy chủ với yêu cầu TCP tới cổng 22
+
+Nhưng đó có thực sự là điều bạn muốn? Bạn chắc chắn muốn truy cập ứng dụng web, mặc dù có lẽ bạn chỉ muốn các yêu cầu HTTPS. Bạn chắc chắn KHÔNG muốn bất kỳ ai truy cập trực tiếp vào cơ sở dữ liệu; trong trường hợp này, chỉ ứng dụng web thực sự cần quyền truy cập đó. Bạn có thể muốn đăng nhập vào máy chủ bằng máy khách SSH, thay vì phải có quyền truy cập vật lý vào máy.
+
+Để thực hiện điều này, hãy thiết lập tường lửa với các “quy tắc” cụ thể, được xếp chồng lên nhau. Ví dụ: bạn có thể có quy tắc này:
+
+* Từ chối tất cả quyền truy cập của bất kỳ ai, với các quy tắc này ...
+  * Cho phép các yêu cầu TCP đến cổng 443 từ bất kỳ ai
+  * Chặn tất cả các yêu cầu TCP tới cổng 22
+  * Chặn tất cả các yêu cầu TCP tới cổng 80
+
+(Cả HTTPS và SSH đều sử dụng yêu cầu TCP.)
+
+![image](https://user-images.githubusercontent.com/83932775/130364704-092d9197-35ff-4f05-a9b4-612d2be360d7.png)
+
+Vì vậy, trong trường hợp này, quyền truy cập duy nhất vào máy sẽ là các yêu cầu HTTPS. Mọi thứ khác sẽ bị chặn bởi tường lửa.
+
+Trong một số trường hợp, bạn muốn kích hoạt quyền truy cập, nhưng không phải từ bất kỳ ai. Ví dụ: bạn có thể thiết lập hệ thống của mình để thông tin đăng nhập vào các hệ thống nhạy cảm chỉ có thể đến từ một máy duy nhất. Đây được gọi là “hộp nhảy”, và mọi người phải đăng nhập vào máy chủ đó trước, sau đó đăng nhập vào máy mục tiêu từ đó. Hộp nhảy có thể được sử dụng để cung cấp quyền truy cập bổ sung trong khi vẫn cung cấp một lớp bảo mật bổ sung.
+
+![image](https://user-images.githubusercontent.com/83932775/130365004-0af1fcfa-5748-43e0-87a0-f2f9f56246ea.png)
+
+Ví dụ: nếu hộp nhảy của bạn có địa chỉ IP nội bộ là 172.0.30.42, các quy tắc tường lửa của bạn có thể trông giống như sau:
+
+* Từ chối mọi quyền truy cập của bất kỳ ai, ngoại trừ ...
+  * Cho phép các yêu cầu TCP đến cổng 443 từ bất kỳ ai
+  * Chỉ cho phép các yêu cầu TCP đến cổng 22 từ 172.0.30.42
+  * Chỉ cho phép các yêu cầu UDP đến cổng 5000 từ 172.0.30.42
+
+Với việc triển khai phần mềm, đây là một số điều cần xem xét khi nói đến tường lửa:
+
+* Tường lửa sẽ ngăn không cho mọi truy cập từ bên ngoài vào ứng dụng chưa được kiểm tra.
+* Tường lửa cần được cấu hình để ứng dụng có thể được kiểm tra một cách thích hợp. Ví dụ: nếu ứng dụng cần truy cập phiên bản phát triển của cơ sở dữ liệu, các quy tắc tường lửa sẽ cần cho phép điều đó.
+* Môi trường phải càng giống bản sao của quá trình sản xuất càng gần càng tốt để nhanh chóng xử lý mọi vấn đề cấu hình liên quan đến tường lửa.
+
+
+Lưu ý rằng tường lửa không chỉ ngăn lưu lượng truy cập; chúng cũng có thể được định cấu hình để giữ lưu lượng truy cập không bị mất. Ví dụ, trường học thường thiết lập tường lửa để ngăn học sinh truy cập tất cả trừ một số ít các trang web giáo dục sử dụng mạng trường học.
+
+## Load Balancer
+
+
+
