@@ -604,5 +604,69 @@ Lưu ý rằng tường lửa không chỉ ngăn lưu lượng truy cập; chún
 
 ## Load Balancer
 
+Bộ cân bằng tải thực hiện chính xác những gì nó nói; nó nhận các yêu cầu và "cân bằng" chúng bằng cách phân tán chúng ra giữa nhiều máy chủ. Ví dụ: nếu bạn có 10 máy chủ lưu trữ ứng dụng web của mình, trước tiên các yêu cầu sẽ đến với bộ cân bằng tải, sau đó sẽ phân loại chúng ra trong số 10 máy chủ đó.
+
+![image](https://user-images.githubusercontent.com/83932775/130406701-6afa38d0-8098-4aca-8e6b-4e5d76d3fb4d.png)
+
+Bộ cân bằng tải có thể đưa ra quyết định về việc máy chủ nào sẽ nhận được một yêu cầu cụ thể theo một số cách khác nhau:
+
+Persistent sessions (Phiên liên tục) - Nếu một ứng dụng yêu cầu một phiên liên tục, ví dụ: người dùng cần đăng nhập, bộ cân bằng tải sẽ gửi yêu cầu đến máy chủ xử lý phiên đó.
+
+![image](https://user-images.githubusercontent.com/83932775/130406752-e82b8011-727b-437e-8dea-be4461c789ef.png)
+
+Round robin - Với cân bằng tải round robin, máy chủ chỉ cần gửi từng yêu cầu đến máy chủ “tiếp theo” trong danh sách.
+
+![image](https://user-images.githubusercontent.com/83932775/130407152-e52cd67a-b0fc-42c9-ae79-4b920b41c1b9.png)
+
+Ít kết nối nhất - Thông thường, việc gửi yêu cầu đến máy chủ ít “bận” nhất - số lượng kết nối hoạt động ít nhất sẽ rất hợp lý. Trong hình, Máy chủ 3 nhận được yêu cầu đầu tiên vì nó hiện không xử lý bất kỳ giao dịch nào. Máy chủ 3 nhận được yêu cầu thứ hai vì dịch vụ có số lượng giao dịch hoạt động ít nhất. Cả Máy chủ 1 và Máy chủ 3 hiện đều có hai giao dịch đang hoạt động, do đó, bộ cân bằng tải giờ đây sẽ sử dụng phương pháp vòng lặp. Máy chủ 1 nhận được yêu cầu thứ ba, Máy chủ 3 nhận được yêu cầu thứ tư và Máy chủ 1 nhận được yêu cầu thứ năm.
+
+![image](https://user-images.githubusercontent.com/83932775/130407324-d3a6f651-5451-4fac-afbb-1bcd8b831603.png)
+
+Hash IP - Với thuật toán này, bộ cân bằng tải đưa ra quyết định dựa trên một hàm băm (một giá trị được mã hóa dựa trên địa chỉ IP của yêu cầu). Bạn có thể nghĩ về điều này tương tự như khi bạn tham dự một sự kiện và các dòng được hình thành cho các đài khác nhau dựa trên chữ cái đầu tiên của họ của bạn. Đây cũng là một cách đơn giản để duy trì các phiên nhất quán.
+
+![image](https://user-images.githubusercontent.com/83932775/130407421-3da4aa12-9100-4bcb-bb63-c486ad6c569b.png)
+
+Các thuật toán khác, phức tạp hơn có thể được sử dụng cho mục đích triển khai. Một số ví dụ này bao gồm:
+
+* Blue-green deployment - Hãy nhớ lại rằng kiểu triển khai này áp dụng các thay đổi đối với môi trường sản xuất mới (xanh lam) thay vì thực hiện các thay đổi trên môi trường sản xuất hiện có (xanh lục). Bộ cân bằng tải gửi lưu lượng truy cập đến môi trường màu xanh lam khi nó sẵn sàng và nếu các vấn đề phát sinh, bộ cân bằng tải có thể gửi lưu lượng truy cập trở lại môi trường màu xanh lục và các thay đổi có thể được khôi phục.
+* Canary deployment - Việc triển khai này bắt đầu bằng cách chuyển hướng một phần nhỏ lưu lượng truy cập của bạn sang môi trường xanh lam. Sau đó, một bộ cân bằng tải có thể tăng lượng lưu lượng truy cập được chuyển hướng sang môi trường màu xanh lam cho đến khi các vấn đề được phát hiện và lưu lượng truy cập quay trở lại môi trường cũ hoặc tất cả máy chủ và người dùng đang ở trong môi trường mới và môi trường cũ được gỡ bỏ hoặc sử dụng cho lần đẩy tiếp theo.
+
+
+## DNS
+
+DNS, hoặc Hệ thống tên miền, là cách các máy chủ trên internet dịch các tên có thể đọc được của con người (chẳng hạn như developer.cisco.com hoặc www.example.com) thành các địa chỉ IP có thể định tuyến theo máy, chẳng hạn như 74.125.157.99 (đối với Google) hoặc 208.80.152.201 (dành cho Wikipedia). Những địa chỉ IP này là cần thiết để thực sự điều hướng Internet.
+
+![image](https://user-images.githubusercontent.com/83932775/130424480-2506f7c8-3225-4597-bc26-5145f50be360.png)
+
+Trong triển khai phần mềm, hệ thống này có lợi vì bạn có thể thay đổi ý nghĩa của các địa chỉ này. Trong ví dụ này, ứng dụng được mã hóa để tìm kiếm cơ sở dữ liệu tại database.example.com:5000, có địa chỉ IP là 203.0.113.25.
+
+![image](https://user-images.githubusercontent.com/83932775/130424626-0c444c5c-b84f-4e76-aaab-b4eac3665d59.png)
+
+Trong một ví dụ khác, bạn có thể tạo một phiên bản phát triển của ứng dụng và bạn muốn nó có phiên bản phát triển của cơ sở dữ liệu, có ip 172.24.18.36.
+
+Bạn có thể đặt máy phát triển sử dụng máy chủ DNS liệt kê database.example.com là 172.24.18.36. Bạn có thể kiểm tra ứng dụng dựa trên cơ sở dữ liệu kiểm tra mà không thực sự thực hiện bất kỳ thay đổi nào đối với ứng dụng.
+
+![image](https://user-images.githubusercontent.com/83932775/130459286-d3edc252-afce-4e53-994f-1b21bc2e88f1.png)
+
+
+Một cách khác để sử dụng DNS như một phần của việc triển khai phần mềm là mô phỏng một số chức năng có thể được thực hiện bởi bộ cân bằng tải. Thực hiện việc này bằng cách thay đổi địa chỉ IP của máy chủ đích khi bạn đã sẵn sàng hoạt động "trực tiếp". (Đây không nhất thiết là một lựa chọn tốt vì các thay đổi DNS có thể mất một ngày hoặc hơn để phổ biến trên internet nói chung.)
+
+## Reverse Proxy
+
+Một proxy ngược tương tự như proxy thông thường: tuy nhiên, trong khi proxy thông thường hoạt động để thực hiện các yêu cầu từ nhiều máy tính trông giống như tất cả chúng đều đến từ cùng một máy khách, proxy ngược hoạt động để đảm bảo các phản hồi giống như tất cả đều đến từ cùng một máy chủ .
+
+Đây là một ví dụ về proxy chuyển tiếp:
+
+![image](https://user-images.githubusercontent.com/83932775/130461300-6f45ad13-a775-4dd6-b766-02b6d825abe0.png)
+
+Tất cả các yêu cầu đến từ mạng nội bộ đều đi qua máy chủ proxy, vì vậy không thể biết được những gì đằng sau proxy. Thường thì phương pháp này được sử dụng để theo dõi hoặc giới hạn quyền truy cập, như trong môi trường trường học.
+
+Trong trường hợp proxy ngược, tình huống cũng tương tự:
+
+![image](https://user-images.githubusercontent.com/83932775/130461359-035a51db-23a7-4171-9edf-1188d7e5d5a1.png)
+
+Tất cả các yêu cầu đến mạng đều đến proxy, nơi chúng được đánh giá và gửi đến máy chủ nội bộ thích hợp để xử lý. Giống như proxy chuyển tiếp, proxy ngược có thể đánh giá lưu lượng truy cập và hành động tương ứng. Theo cách này, nó tương tự như và có thể được sử dụng như một bức tường lửa hoặc một bộ cân bằng tải.
+
+Bởi vì nó rất giống các chức năng này, Reverse Proxy cũng có thể được sử dụng để triển khai phần mềm theo những cách tương tự.
 
 
