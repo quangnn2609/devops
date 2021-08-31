@@ -155,7 +155,7 @@ while True:
 # 10. Provide the ISS key values risetime and duration.
         risetimeInEpochSeconds = json_data["timestamp"]
         #durationInSeconds      = json_data["<!!!REPLACEME!!!> with path to duration key!!!>"]
-        durationInSeconds = "Khong co ket qua second trong API moi"
+        durationInSeconds = "Khong co ket qua second trong API moi" # -> Because the Current API does not has a response of “second” field in Json, so I choose print a string “Khong vo ket qua second trong API moi” to replace this.
 
 # 11. Convert the risetime epoch value to a human readable date and time.
         risetimeInFormattedString = time.strftime("%d-%m-%Y %H:%M:%S", time.gmtime(risetimeInEpochSeconds))
