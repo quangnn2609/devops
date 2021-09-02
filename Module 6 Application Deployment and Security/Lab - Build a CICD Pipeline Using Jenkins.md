@@ -205,4 +205,111 @@ j. Nhấp vào nút **Save**. Bạn được quay lại bảng điều khiển J
 Nhập địa chỉ cục bộ, **localhost:5050**. Bạn sẽ thấy nội dung của index.html của bạn được hiển thị bằng màu nền xanh thép nhạt với **You are calling me from 172.17.0.1** được hiển thị dưới dạng H1.
 ![image](https://user-images.githubusercontent.com/83932775/131106616-3b8c0b46-b763-4b98-82fe-103b3ead82ca.png)
 
+# Part 7: Use Jenkins to Test a Build
+Trong phần này, bạn sẽ tạo một công việc thứ hai kiểm tra bản dựng để đảm bảo rằng nó đang hoạt động bình thường.
 
+**Lưu ý**: Bạn cần dừng và gỡ bỏ container name **samplerunning** docker.
+
+![image](https://user-images.githubusercontent.com/83932775/131842590-7c0f9c35-6d68-44ca-9d69-d8c6af396612.png)
+
+## Bước 1: Bắt đầu một công việc mới để testing sample-app của bạn.
+
+a. Quay lại tab trình duyệt web **Jenkins** và nhấp vào liên kết Jenkins ở góc trên cùng bên trái để quay lại trang tổng quan chính.
+
+b. Nhấp vào liên kết **New Item** để tạo công việc mới.
+
+![image](https://user-images.githubusercontent.com/83932775/131843270-3864d69f-8730-4e86-bc54-80730dac2b81.png)
+
+c. Trong trường Nhập tên mục, hãy điền tên **TestAppJob**.
+
+![image](https://user-images.githubusercontent.com/83932775/131843436-ed89b240-3d64-4353-884d-e5c8175d7293.png)
+
+d. Nhấp vào **Freestyle project** làm loại công việc.
+
+![image](https://user-images.githubusercontent.com/83932775/131843770-5607ed24-d6ba-4102-bd7b-1e7487d32662.png)
+
+e. Cuộn xuống dưới cùng và nhấp vào **OK**.
+
+## Bước 2: Định cấu hình Jenkins TestAppJob.
+a. Thêm mô tả cho công việc của bạn. Ví dụ: "**My first Jenkins test.**"
+
+![image](https://user-images.githubusercontent.com/83932775/131844024-b474e083-b0a5-4665-9cec-08de37840d04.png)
+
+b. Đặt **Source Code Management** thành **None**.
+
+![image](https://user-images.githubusercontent.com/83932775/131844182-99c70abf-c10a-4b1f-b0c8-73730ae50f24.png)
+
+c. Nhấp vào tab **Build Triggers** và chọn hộp, Xây dựng sau khi các dự án khác được xây dựng - **Build after other projects are built**. Đối với **Projects to watch**, hãy điền vào tên **BuildAppJob**.
+
+![image](https://user-images.githubusercontent.com/83932775/131844719-33a17735-9275-465a-934e-2002df3ce822.png)
+
+## Bước 3: Viết tập lệnh thử nghiệm sẽ chạy sau khi xây dựng ổn định BuildAppJob.
+a. Nhấp vào tab **Build**.
+
+b. Nhấp vào **Add build step** và chọn **Execute shell**.
+
+![image](https://user-images.githubusercontent.com/83932775/131846737-e3681c76-7652-4312-9563-b4b86bf5fbf8.png)
+
+c. Nhập tập lệnh sau. Lệnh **if** phải nằm trên một dòng bao gồm **; then**. Lệnh này sẽ **grep** kết quả trả về từ lệnh cURL để xem liệu **You are calling me from 172.17.0.1** có được trả về hay không. Nếu đúng, tập lệnh thoát với mã 0, có nghĩa là không có lỗi nào trong bản dựng **BuildAppJob**. Nếu sai, tập lệnh thoát với mã là 1 có nghĩa là **BuildAppJob** không thành công.
+
+![image](https://user-images.githubusercontent.com/83932775/131847208-3bba3dc9-a0b8-481e-8ef3-fd791cfda98f.png)
+
+d. Nhấp vào **Save**, sau đó nhấp vào liên kết **Back to Dashboard** ở bên trái.
+## Bước 4: Yêu cầu Jenkins chạy lại công việc BuildAppJob.
+a. Làm mới trang web bằng nút làm mới cho trình duyệt của bạn.
+
+b. Bây giờ bạn sẽ thấy hai công việc của bạn được liệt kê trong một bảng. Đối với công việc **BuildAppJob**, hãy nhấp vào nút xây dựng ở ngoài cùng bên phải (đồng hồ có mũi tên).
+
+![image](https://user-images.githubusercontent.com/83932775/131847698-2ba92eb7-ef7a-43c4-8bcd-4a2277e43628.png)
+
+## Bước 5: Xác minh cả hai công việc đã hoàn thành.
+Nếu mọi việc suôn sẻ, bạn sẽ thấy dấu thời gian cho bản cập nhật cột **Last Success** cho cả **BuildAppJob** và **TestAppJob**. Điều này có nghĩa là mã của bạn cho cả hai công việc đã chạy mà không có lỗi. Nhưng bạn cũng có thể xác minh điều này cho chính mình.
+
+![image](https://user-images.githubusercontent.com/83932775/131848040-ab747fa8-bba2-46e5-9095-a7aa346821dc.png)
+
+**Lưu ý**: Nếu thời gian không cập nhật thời gian, xin vui lòng tự động hoạt động trên mới bằng cách để cùng một góc.
+
+a. Nhấp vào Liên kết cho **TestAppJob**. Trong **Permalinks**, nhấp vào liên kết cho bản dựng cuối cùng của bạn, sau đó nhấp vào **Console Output**. Bạn sẽ thấy đầu ra tương tự như sau:
+
+![image](https://user-images.githubusercontent.com/83932775/131849466-d25af36c-70b2-49d8-89ce-e6dfbcf46716.png)
+
+b. Không cần thiết phải xác minh ứng dụng mẫu của bạn đang chạy vì **TestAppJob** đã thực hiện việc này cho bạn. Tuy nhiên, bạn có thể mở tab trình duyệt **172.17.0.1:5050** để xem nó thực sự đang chạy.
+
+# Phần 8: Tạo một đường ống trong Jenkins.
+
+Mặc dù bạn hiện có thể chạy hai công việc của mình bằng cách chỉ cần nhấp vào nút **Build Now** cho **BuildAppJob**, các dự án phát triển phần mềm thường phức tạp hơn nhiều. Các dự án này có thể được hưởng lợi rất nhiều từ việc tự động hóa các bản dựng để tích hợp liên tục các thay đổi mã và liên tục tạo các bản dựng phát triển sẵn sàng triển khai. Đây là bản chất của CI / CD. Một đường dẫn có thể được tự động chạy dựa trên nhiều trình kích hoạt khác nhau, bao gồm định kỳ, dựa trên thăm dò ý kiến GitHub về các thay đổi hoặc từ một tập lệnh chạy từ xa. Tuy nhiên, trong phần này, bạn sẽ viết kịch bản một đường ống trong Jenkins để chạy hai ứng dụng của bạn bất cứ khi nào bạn nhấp vào nút **Build Now**.
+
+## Bước 1: Tạo công việc Pipeline.
+a. Nhấp vào liên kết **Jenkins** ở trên cùng bên trái, sau đó nhấp vào **New Item**.
+
+b. Trong trường **Enter an item name**, hãy nhập **SamplePipeline**.
+
+![image](https://user-images.githubusercontent.com/83932775/131850298-1cdc8c56-f973-4fb8-97c3-5234a0d32b0f.png)
+
+c. Chọn **Pipeline** làm loại công việc.
+
+![image](https://user-images.githubusercontent.com/83932775/131850405-943ccada-150d-4c07-aa5b-b2af277fe587.png)
+
+d. Cuộn xuống dưới cùng và nhấp vào **OK**.
+
+## Bước 2: Định cấu hình công việc SamplePipeline.
+a. Ở trên cùng, nhấp vào các tab và điều tra từng phần của trang cấu hình. Lưu ý rằng có một số cách khác nhau để kích hoạt một bản dựng. Đối với công việc SamplePipeline, bạn sẽ kích hoạt nó theo cách thủ công.
+
+b. Trong phần **Pipeline**, hãy thêm tập lệnh sau.
+
+![image](https://user-images.githubusercontent.com/83932775/131851269-2fe02e51-fdc2-470b-8fc7-1819ee0d15d9.png)
+
+Tập lệnh này thực hiện những việc sau:
+
+* Nó tạo ra một bản dựng nút duy nhất trái ngược với một nút phân tán hoặc nhiều nút. Cấu hình phân tán hoặc nhiều nút dành cho các đường ống lớn hơn so với cấu hình bạn đang xây dựng trong phòng thí nghiệm này và nằm ngoài phạm vi của khóa học này.
+* Trong giai đoạn **Preparation**, trước tiên, SamplePipeline sẽ đảm bảo rằng bất kỳ phiên bản nào trước đó của vùng chứa trình gắn đế **BuildAppJob** đều bị dừng và bị xóa. Nhưng nếu chưa có một vùng chứa đang chạy, bạn sẽ gặp lỗi. Do đó, bạn sử dụng hàm **catchError** để bắt bất kỳ lỗi nào và trả về giá trị "SUCCESS". Điều này sẽ đảm bảo rằng đường ống tiếp tục đến giai đoạn tiếp theo.
+* Trong giai đoạn **Build**, **SamplePipeline** sẽ xây dựng **BuildAppJob** của bạn.
+* Trong giai đoạn **Results**, **SamplePipeline** sẽ xây dựng **TestAppJob** của bạn.
+
+c. Nhấp vào **Save** và bạn sẽ được đưa trở lại bảng điều khiển Jenkins cho công việc **SamplePipeline**.
+## Bước 3: Chạy SamplePipeline.
+Ở bên trái, nhấp vào **Build Now** để chạy công việc **SamplePipeline**. Nếu bạn đã viết tập lệnh Pipeline của mình mà không gặp lỗi, thì **Stage View** sẽ hiển thị ba hộp màu xanh lục với số giây mỗi giai đoạn cần để tạo. Nếu không, hãy nhấp vào Định cấu hình ở bên trái để quay lại cấu hình **SamplePipeline** và kiểm tra tập lệnh Đường ống của bạn
+![image](https://user-images.githubusercontent.com/83932775/131852596-520fa98c-2e10-4ae7-b4e1-6fb3700066e4.png)
+
+## Bước 4: Xác minh đầu ra của SamplePipeline.
+![image](https://user-images.githubusercontent.com/83932775/131852826-c1c8100b-fd3f-4060-b3af-f03712d541fa.png)
