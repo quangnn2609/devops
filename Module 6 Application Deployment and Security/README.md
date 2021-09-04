@@ -669,4 +669,90 @@ Tất cả các yêu cầu đến mạng đều đến proxy, nơi chúng đư�
 
 Bởi vì nó rất giống các chức năng này, Reverse Proxy cũng có thể được sử dụng để triển khai phần mềm theo những cách tương tự.
 
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+# Securing Applications
+## Securing the Data
+Không có gì bí mật rằng an ninh là một vấn đề lớn trong thế giới ngày nay. Điều này áp dụng cho cả dữ liệu và ứng dụng. Nếu một người an toàn và người kia thì không, cả hai đều dễ bị tổn thương.
 
+Trong phần này, bạn sẽ xem xét một số vấn đề liên quan đến việc bảo mật cả dữ liệu và ứng dụng của bạn, bắt đầu bằng dữ liệu.
+
+Dữ liệu không chỉ là trung tâm của ứng dụng của bạn; nó được cho là nguồn tài nguyên vô giá mới; Và nó phải được bảo vệ, cả vì lý do thực tế và pháp lý. Điều đó áp dụng cho dù dữ liệu đang được lưu trữ (còn được gọi là dữ liệu khi nghỉ ngơi - data at rest) hoặc được chuyển từ máy chủ này sang máy chủ khác (còn được gọi là dữ liệu trong chuyến bay hoặc đang chuyển động - data at motion).
+
+**Thực tiễn tốt nhất để lưu trữ dữ liệu được mã hóa**
+
+Khi nói đến việc bảo vệ dữ liệu khi nghỉ ngơi, có một vài điều bạn cần xem xét.
+
+**Mã hóa dữ liệu**
+
+Bạn có thể đã thấy rất nhiều câu chuyện tin tức về vi phạm dữ liệu. Đây thường là vấn đề các cá nhân truy cập dữ liệu được lưu trữ nhưng không được bảo vệ. Trong bối cảnh này, điều này có nghĩa là dữ liệu được lưu trữ theo cách mà không chỉ một cá nhân có thể truy cập, mà khi họ làm, dữ liệu dễ dàng hiển thị và có thể sử dụng được.
+
+Lý tưởng nhất, những người hoặc ứng dụng trái phép sẽ không bao giờ có quyền truy cập vào hệ thống của bạn, nhưng rõ ràng bạn không thể đảm bảo điều đó. Vì vậy, khi một người có ý định xấu (người có thể dễ dàng là một nhân viên bất mãn có quyền truy cập hợp pháp) có quyền truy cập vào cơ sở dữ liệu của bạn, bạn không muốn họ thấy một cái gì đó như thế này:
+
+![image](https://user-images.githubusercontent.com/83932775/132095177-bb9e17b2-8796-46fe-a9f7-f846f95ec4d3.png)
+
+**Thay vào đó, bạn muốn họ nhìn thấy một cái gì đó như thế này:**
+
+![image](https://user-images.githubusercontent.com/83932775/132095214-148a5290-637b-4dc1-bf33-3457911c6fde.png)
+
+Có hai phương pháp để mã hóa dữ liệu: mã hóa một chiều và mã hóa hai chiều.
+
+Mã hóa hai chiều theo nghĩa đen là những gì nó nghe như thế nào; bạn mã hóa dữ liệu bằng khóa, và sau đó bạn có thể sử dụng khóa đó (hoặc một biến thể trên đó) để giải mã dữ liệu để lấy lại nó bằng văn bản đơn giản. Bạn sẽ sử dụng điều này cho thông tin bạn sẽ cần để truy cập ở dạng ban đầu của nó, chẳng hạn như hồ sơ y tế hoặc số an sinh xã hội.
+
+Mã hóa một cách đơn giản hơn, ở chỗ bạn có thể dễ dàng tạo ra một giá trị được mã hóa mà không nhất thiết phải sử dụng một khóa cụ thể, nhưng bạn không thể giải mã nó. Bạn sẽ sử dụng nó cho thông tin bạn không cần phải truy xuất, chỉ cần so sánh, chẳng hạn như mật khẩu. Ví dụ: giả sử bạn có người dùng, người có mật khẩu . Bạn có thể lưu trữ dữ liệu như bob:munich
+
+![image](https://user-images.githubusercontent.com/83932775/132095289-5183a353-0d98-462e-a2f6-8f1cf84737f1.png)
+
+Trong trường hợp này, tranh giành mang lại cho bạn , nhưng không có cách nào để có được "munich" trở lại từ đó. Để kiểm tra mật khẩu của Bob khi anh ta đăng nhập lại, bạn sẽ cần phải làm một cái gì đó như thế này munich:@#$%SD@$$drw
+
+**select * from users where username = ‘bob’ and scrambled_password=scrambledversion(‘munich’)**
+
+Điều này sẽ đánh giá đến:
+
+**select * from users where username = ‘bob’ and scrambled_password=’@#$%SD@$$drw’**
+
+Tất nhiên, câu hỏi sau đó trở thành, nếu bạn định mã hóa dữ liệu của mình bằng khóa, bạn lưu trữ chìa khóa an toàn ở đâu? Bạn có một số tùy chọn khác nhau, từ phần cứng chuyên dụng (tốt, nhưng khó khăn và tốn kém), để sử dụng một dịch vụ quản lý quan trọng như Amazon Key Management Service (sử dụng phần cứng đặc biệt nhưng dễ dàng hơn và ít tốn kém hơn), để lưu trữ nó trong chính cơ sở dữ liệu (không phải là thực tiễn tốt nhất, không có đặc điểm phần cứng hoặc vật lý đặc biệt và dễ bị tấn công).
+
+**Lỗ hổng phần mềm**
+
+Khi nói đến lỗ hổng phần mềm, bạn cần phải lo lắng về hai loại khác nhau: của riêng bạn và của mọi người khác.
+
+Hầu hết các nhà phát triển không phải là chuyên gia về bảo mật, vì vậy không có gì lạ khi vô tình mã hóa các lỗ hổng bảo mật vào ứng dụng của bạn. Vì lý do này, có một số công cụ quét mã khác nhau, chẳng hạn như Bandit, Brakeman và VisualCodeGrepper, sẽ quét mã của bạn để tìm kiếm các vấn đề nổi tiếng. Những vấn đề này có thể được nhúng trong mã bạn đã tự viết hoặc chúng có thể liên quan đến việc sử dụng các thư viện khác.
+
+Những thư viện khác là cách bạn kết thúc với các lỗ hổng của mọi người khác. Ngay cả phần mềm đã được sử dụng trong nhiều thập kỷ cũng có thể có vấn đề, chẳng hạn như lỗi Heartbleed được phát hiện trong OpenSSL, phần mềm tạo thành cơ sở của phần lớn internet. Phần mềm này đã xuất hiện từ năm 1998, nhưng lỗi này đã được giới thiệu vào năm 2012 và không bị phát hiện trong hai năm trước khi nó được tìm thấy và vá.
+
+Hãy chắc chắn rằng ai đó trong tổ chức của bạn chịu trách nhiệm theo kịp các lỗ hổng mới nhất và vá chúng khi thích hợp.
+
+**Lưu trữ quá nhiều dữ liệu**
+
+Hãy nhớ rằng tin tặc không thể có được những gì bạn không lưu trữ. Ví dụ: nếu bạn chỉ cần mã ủy quyền thẻ tín dụng để thanh toán định kỳ, không có lý do gì để lưu trữ toàn bộ số thẻ tín dụng. Điều này đặc biệt quan trọng khi nói đến việc xác định cá nhân thông tin như số an sinh xã hội và ngày sinh nhật và các thông tin khác có thể được coi là "riêng tư", chẳng hạn như lịch sử của người dùng.
+
+Trừ khi bạn cần dữ liệu cho một chức năng thiết yếu, đừng lưu trữ nó.
+
+**Lưu trữ dữ liệu trên đám mây**
+
+Hãy nhớ rằng khi bạn lưu trữ dữ liệu trong "đám mây", theo định nghĩa, bạn đang lưu trữ nó trên máy tính của người khác. Mặc dù trong nhiều trường hợp, bảo mật của nhà cung cấp đám mây có thể tốt hơn so với hầu hết các doanh nghiệp, bạn vẫn gặp vấn đề rằng các máy chủ đó hoàn toàn nằm ngoài tầm kiểm soát của bạn. Bạn không biết nhân viên nào đang truy cập chúng, hoặc thậm chí điều gì xảy ra với ổ cứng đã ngừng hoạt động. Điều này đặc biệt đúng khi sử dụng SSD làm bộ nhớ, bởi vì cấu trúc kiến trúc của SSD gây khó khăn hoặc không thể thực sự xóa sạch mọi lĩnh vực. Hãy chắc chắn rằng dữ liệu đám mây của bạn được mã hóa hoặc bảo vệ.
+
+**Thiết bị chuyển vùng**
+
+Vào tháng 5 năm 2006, Bộ Cựu chiến binh Hoa Kỳ đã mất một máy tính xách tay chứa cơ sở dữ liệu thông tin cá nhân của 26,5 triệu cựu chiến binh và quân nhân. Máy tính xách tay cuối cùng đã được phục hồi, nhưng nó vẫn là một ví dụ tuyệt vời về lý do tại sao thông tin phải được lưu trữ một cách an toàn, đặc biệt là vì lực lượng lao động của thế giới hiện nay di động hơn nhiều so với năm 2006.
+
+Ngoài ra, các ứng dụng ngày càng có trên các thiết bị thậm chí còn di động hơn máy tính xách tay, chẳng hạn như máy tính bảng và đặc biệt là điện thoại di động của bạn. Họ chỉ đơn giản là dễ dàng hơn để mất. Đây thậm chí có thể không phải là các ứng dụng truyền thống như cơ sở dữ liệu, nhưng các ứng dụng nhắm vào người dùng cuối. Hãy chắc chắn rằng bạn không để dữ liệu của mình dễ bị tổn thương bằng cách mã hóa nó bất cứ khi nào có thể.
+
+**Thực tiễn tốt nhất để vận chuyển dữ liệu**
+
+Dữ liệu cũng dễ bị tổn thương khi nó được truyền đi. Trên thực tế, nó có thể thậm chí còn dễ bị tổn thương hơn vì cách internet được thiết kế, nơi các gói đi qua nhiều máy chủ (có thể hoặc không thể thuộc về bạn) trên đường đến đích cuối cùng của chúng.
+
+Cấu trúc này làm cho dữ liệu của bạn dễ bị tấn công "người đàn ông ở giữa", trong đó một máy chủ trên đường đi có thể quan sát, đánh cắp và thậm chí thay đổi dữ liệu khi nó đi qua. Để ngăn ngừa những vấn đề này, bạn có thể sử dụng:
+
+SSH - Khi kết nối với máy chủ của bạn, luôn luôn sử dụng một giao thức an toàn như SSH , thay vì một giao thức không an toàn như Telnet. SSH cung cấp xác thực và mã hóa tin nhắn giữa nguồn và máy nhắm mục tiêu, gây khó khăn hoặc không thể rình mò hành động của bạn.
+
+TLS - Ngày nay, phần lớn các yêu cầu đến và đi từ trình duyệt sử dụng giao thức (thay vì ). Giao thức này ban đầu được gọi là SSL, hoặc Secured Sockets Layer, nhưng trong những năm qua nó đã dần dần được thay thế bằng TLS, hoặc Transport Layer Security. TLS cung cấp xác thực tin nhắn và mật mã mạnh hơn so với người tiền nhiệm của nó. Bất cứ khi nào có thể, bạn nên sử dụng TLS.https://http://
+
+VPN - Mạng riêng ảo, có lẽ là phương tiện quan trọng nhất để bảo vệ ứng dụng của bạn. VPN cho phép giữ tất cả lưu lượng truy cập liên quan đến ứng dụng bên trong mạng của bạn, ngay cả khi làm việc với nhân viên từ xa. Nhân viên từ xa kết nối với máy chủ VPN, sau đó hoạt động như một proxy và mã hóa tất cả lưu lượng truy cập đến và đi từ người dùng.
+
+Sử dụng VPN có một số lợi ích. Đầu tiên, lưu lượng truy cập đến và đi từ người dùng không dễ bị rình mò hoặc thao túng, vì vậy không ai có thể sử dụng kết nối đó để làm hỏng ứng dụng hoặc mạng của bạn. Thứ hai, vì người dùng về cơ bản nằm trong mạng riêng, bạn có thể hạn chế quyền truy cập vào các tài nguyên phát triển và triển khai, cũng như các tài nguyên không cần phải truy cập được cho người dùng cuối, chẳng hạn như cơ sở dữ liệu thô.
+
+## SQL Injection là gì?
+SQL injection là một kỹ thuật tiêm mã được sử dụng để tấn công các ứng dụng dựa trên dữ liệu, trong đó các câu lệnh SQL độc hại được chèn vào trường nhập cảnh để thực thi (ví dụ: đổ nội dung cơ sở dữ liệu cho kẻ tấn công). SQL injection phải khai thác lỗ hổng bảo mật trong phần mềm của ứng dụng. Hai ví dụ là khi đầu vào của người dùng được lọc không chính xác cho các ký tự thoát theo nghĩa đen chuỗi được nhúng trong câu lệnh SQL hoặc đầu vào của người dùng không được gõ mạnh và thực hiện bất ngờ. SQL injection chủ yếu được gọi là vector tấn công cho các trang web nhưng có thể được sử dụng để tấn công bất kỳ loại cơ sở dữ liệu SQL nào.
+
+Các cuộc tấn công SQL injection cho phép kẻ tấn công giả mạo danh tính, giả mạo dữ liệu hiện có, gây ra các vấn đề từ chối như vô hiệu hóa các giao dịch hoặc thay đổi số dư, cho phép tiết lộ hoàn toàn tất cả dữ liệu trên hệ thống, phá hủy dữ liệu hoặc làm cho nó không khả dụng và trở thành quản trị viên của máy chủ cơ sở dữ liệu.
