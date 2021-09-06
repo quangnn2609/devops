@@ -85,3 +85,89 @@ Một hệ thống có thể quan sát cho phép người dùng suy ra trạng t
 
 Một số nhà sản xuất phần mềm và các chuyên gia về khả năng quan sát đề xuất cái được gọi là Chaos Engineering - Kỹ thuật hỗn loạn. Triết lý này dựa trên khẳng định rằng thất bại là bình thường: khi ứng dụng mở rộng, một số bộ phận luôn thất bại. Do đó, các ứng dụng và nền tảng phải được thiết kế để:
 
+## Software-Defined Infrastructure: A Case for Automation
+Cơ sở hạ tầng được xác định bằng phần mềm, còn được gọi là điện toán đám mây, cho phép các nhà phát triển và nhà khai thác sử dụng phần mềm để trưng dụng, cấu hình, triển khai và quản lý tài nguyên máy tính, lưu trữ và mạng bằng kim loại trần và ảo hóa.
+
+* Điện toán đám mây cũng cho phép các nền tảng và dịch vụ trừu tượng hơn, chẳng hạn như Database-as-a-Service (DaaS), Platform-as-a-Service (PaaS), máy tính không máy chủ, phối hợp container và hơn thế nữa.
+* Các đám mây riêng cho phép các doanh nghiệp sử dụng phần cứng đắt tiền tại chỗ hiệu quả hơn nhiều.
+* Các đám mây tư nhân công cộng và được lưu trữ cho phép các doanh nghiệp thuê công suất khi cần, cho phép họ di chuyển và phát triển (hoặc thu hẹp) nhanh hơn, đơn giản hóa quy hoạch và tránh đầu tư vốn cố định.
+
+**Lợi ích của mô hình đám mây**
+* **Tự phục vụ (nền tảng theo yêu cầu)** - Tài nguyên đám mây có thể có sẵn trong vòng vài giờ hoặc vài phút sau khi cần chúng. Do đó đẩy nhanh tất cả các giai đoạn phát triển và cho phép * mở rộng nhanh chóng năng lực sản xuất. Các ứng dụng có thể được mở rộng trong khu vực đám mây công cộng, bộ dịch vụ hoặc nhà cung cấp có hiệu quả nhất về chi phí.
+* **Đóng đặc điểm kỹ thuật, tính nhất quán, khả năng lặp lại** - Các nhà phát triển có thể nắm bắt và chuẩn hóa các cấu hình độc đáo, duy trì tính nhất quán cấu hình của các nền tảng thông qua phát triển, thử nghiệm, dàn dựng và sản xuất. Triển khai một ứng dụng và cấu hình được biết đến tốt ngăn chặn các lỗi có thể được giới thiệu trong quá trình thay đổi cấu hình nền tảng thủ công.
+* **Trừu tượng hóa nền tảng - Container** công nghệ trừu tượng các ứng dụng và nền tảng cách xa nhau, bằng cách đóng gói các phụ thuộc ứng dụng và cho phép ứng dụng container của bạn chạy trên môi trường máy chủ được chỉ định chung.
+
+**Những thách thức của mô hình đám mây**
+
+Các nhà phát triển phải chú ý đến thiết kế nền tảng, kiến trúc và bảo mật. Môi trường đám mây tạo ra nhu cầu mới cho các ứng dụng. Khung đám mây công cộng hoặc riêng tư có các GIAO DỊCH NGƯỜI DÙNG, API và quirks khác nhau. Điều này có nghĩa là người dùng không thể luôn luôn coi tài nguyên đám mây là hàng hóa mà họ thực sự nên có, đặc biệt là khi cố gắng quản lý đám mây theo cách thủ công.
+
+Kiểm soát truy cập là rất quan trọng, bởi vì người dùng đám mây có quyền sai có thể gây ra rất nhiều thiệt hại cho tài sản của tổ chức của họ. Quyền đám mây cũng có thể là thách thức để quản lý, đặc biệt là trong các tình huống được vận hành thủ công.
+
+Khi tài nguyên đám mây có thể được tự phục vụ nhanh chóng thông qua các thao tác thủ công, mức tiêu thụ có thể khó quản lý và chi phí rất khó tính toán. Các đám mây riêng đòi hỏi kiểm toán thường xuyên và các thủ tục để nghỉ hưu cơ sở hạ tầng ảo không sử dụng. Người dùng đám mây công cộng có thể ngạc nhiên bởi chi phí bất ngờ khi tài nguyên trả tiền theo sử dụng bị bỏ rơi, nhưng không bị phá hủy.
+
+Nhiều trong số những thách thức này có thể được giải quyết thông qua tự động hóa.
+
+## Các ứng dụng phân tán và động: Một trường hợp khác cho tự động hóa
+Các ứng dụng doanh nghiệp và công cộng quy mô lớn có thể cần phải quản lý tải trọng lưu lượng truy cập, tính toán và lưu trữ nặng và thay đổi.
+
+* Các ứng dụng cần cung cấp trải nghiệm tốt cho cơ sở người dùng của họ.
+* Họ cần phải có khả năng phục hồi, có sẵn cao, bảo vệ tính toàn vẹn và bảo mật dữ liệu người dùng và tuân thủ các quy định của địa phương về nơi và cách lưu trữ dữ liệu.
+* Họ cần phát triển (và thu nhỏ) hiệu quả để đáp ứng nhu cầu kinh doanh, khai thác xu hướng và điều hành hiệu quả chi phí.
+
+Kiến trúc ứng dụng đơn máy chủ, "nguyên khối", trong khi khái niệm đơn giản, không phục vụ rất tốt những nhu cầu này. Một máy chủ là một điểm thất bại duy nhất, giới hạn hiệu suất và dung lượng, và có khả năng nâng cấp hạn chế. Sao chép máy chủ duy nhất có thể tăng dung lượng cho các ứng dụng rất đơn giản, nhưng không hoạt động cho các ứng dụng yêu cầu tính nhất quán dữ liệu trên tất cả các phiên bản. Và nó sẽ không bảo vệ dữ liệu người dùng nếu có lỗi trên máy chủ nơi dữ liệu của họ cư trú.
+
+Vì những lý do này và các lý do khác, kiến trúc ứng dụng hiện đại ngày càng được phân phối. Chúng được xây dựng từ các thành phần nhỏ và tương đối nhẹ đôi khi được gọi là microservices. Các thành phần này có thể được cô lập trong các container, được kết nối thông qua các dịch vụ khám phá và nhắn tin (kết nối mạng trừu tượng) và được hỗ trợ bởi các cơ sở dữ liệu có khả năng mở rộng, có thể mở rộng (duy trì trạng thái).
+
+![image](https://user-images.githubusercontent.com/83932775/132239621-2deb624c-f8aa-4dbc-9fc9-9e4c4c3c03f1.png)
+
+Các ứng dụng dựa trên microservices có thể (về lý thuyết) được mở rộng theo dịch vụ, khi cần thiết để đáp ứng nhu cầu lưu lượng truy cập hoặc hiệu suất. Kiến trúc này giúp có được lợi ích lớn nhất từ cơ sở hạ tầng siêu hội tụ, cho phép tinh chỉnh kết nối và dịch vụ điện toán, lưu trữ và mạng để phù hợp với yêu cầu tải ứng dụng động.
+
+## Ứng dụng dựa trên microservices
+
+![image](https://user-images.githubusercontent.com/83932775/132241082-eb745501-03dd-4ef3-b27e-87d9c99dd211.png)
+
+**Lợi ích của microservices**
+
+* **Khả năng mở rộng** - Microservices có thể được thu nhỏ và cân bằng tải khi cần thiết trên nhiều máy chủ được kết nối mạng hoặc thậm chí nhiều trung tâm dữ liệu riêng biệt về mặt địa lý hoặc các khu vực đám mây công cộng. Điều này loại bỏ các điểm thất bại duy nhất và cung cấp nhiều loại công suất cụ thể theo từng nhiệm vụ như nhu cầu điều kiện, bất cứ nơi nào cần thiết, loại bỏ tắc nghẽn.
+* **Công cụ tự động hóa cơ sở hạ tầng** - Càng ngày, sự năng động của các ứng dụng dựa trên microservice được cung cấp bởi cơ sở hạ tầng. Những "dàn nhạc" container này như Kubernetes hoặc Mesos, tự động hóa việc mở rộng theo yêu cầu, tự phục hồi và hơn thế nữa.
+
+
+**Thách thức của microservices**
+* **Tăng độ phức tạp** - Microservices có nghĩa là có nhiều bộ phận chuyển động để cấu hình và triển khai. Có nhiều hoạt động đòi hỏi khắt khe hơn, bao gồm mở rộng quy mô theo yêu cầu, tự phục hồi và các tính năng khác.
+* **Tự động hóa là một yêu cầu** - Các phương pháp thủ công không thể đối phó thực tế với sự phức tạp của việc triển khai và quản lý các ứng dụng động và nền tảng dàn nhạc của chúng, với các hoạt động tốc độ cao, tự trị và các bit và mảnh tạm thời và các mảnh nhỏ của chúng.
+
+## Tự động hóa tóm tắt cơ sở hạ tầng
+
+Những nhu cầu kinh doanh và kỹ thuật này, xu hướng và động lực học này, khuyến khích các nhà phát triển và nhà khai thác sử dụng tự động hóa ở khắp mọi nơi cho các nhiệm vụ sau:
+
+* Quản lý tất cả các giai đoạn xây dựng ứng dụng, cấu hình, triển khai và quản lý vòng đời. Điều này bao gồm mã hóa, thử nghiệm, dàn dựng và sản xuất.
+* Quản lý cơ sở hạ tầng được xác định bằng phần mềm thay mặt cho các ứng dụng bạn xây dựng.
+* Bên cạnh các ứng dụng của bạn, để bảo tồn, cập nhật và liên tục cải thiện mã tự động hóa. Mã này giúp bạn phát triển, kiểm tra, giai đoạn, giám sát và vận hành các ứng dụng của chúng tôi ở quy mô sản xuất và trong các môi trường khác nhau. Bạn ngày càng có thể coi tất cả các mã này như một sản phẩm làm việc.
+
+# DevOps và SRE
+## Giới thiệu về DevOps và SRE
+Để tự động hóa full-stack thực sự hiệu quả, nó đòi hỏi những thay đổi đối với văn hóa tổ chức, bao gồm phá vỡ sự phân chia lịch sử giữa Phát triển (Dev) và Hoạt động (Ops).
+
+Chủ đề này thảo luận về lịch sử của phương pháp DevOps và các nguyên tắc cốt lõi của các tổ chức DevOps thành công.
+
+## Phân chia DevOps
+
+Trong lịch sử, tạo ứng dụng là công việc của các nhà phát triển phần mềm (Dev), và đảm bảo rằng các ứng dụng hoạt động cho người dùng và doanh nghiệp đã là tỉnh chuyên ngành hoạt động CNTT (Ops).
+![image](https://user-images.githubusercontent.com/83932775/132241861-f67d3867-0f3f-4d88-81ad-e36d975130d8.png)
+
+Trong hệ sinh thái CNTT doanh nghiệp truyền thống, trước ảo hóa, việc tách Dev khỏi Ops có vẻ hợp lý. Miễn là cơ sở hạ tầng được dựa trên đầu tư vào thiết bị vốn (cài đặt thủ công, cung cấp, cấu hình và quản lý phần cứng), nó yêu cầu người gác cổng. Những người gác cổng Ops đã làm việc trên một khoảng thời gian khác với người dùng và nhà phát triển, và có các ưu đãi và mối quan tâm khác nhau.
+
+**Nút thắt cổ chai di sản**
+
+Theo truyền thống, việc cung cấp năng lượng dự án hoặc mở rộng quy mô hệ thống sẽ được định hướng theo kế hoạch, thay vì theo nhu cầu. Trưng dụng, mua, cài đặt, cung cấp và cấu hình máy chủ hoặc dung lượng mạng và dịch vụ cho một dự án có thể mất vài tháng. Với nguồn lực vật chất hạn chế, chia sẻ tài nguyên là phổ biến.
+
+Việc thiếu những cách đơn giản để thiết lập và phá hủy các môi trường và kết nối bị cô lập có nghĩa là các tổ chức có xu hướng tạo ra các hệ thống lâu dài trở thành điểm thất bại duy nhất. Các mạng lưới sử dụng hỗn hợp rất khó bảo mật và đòi hỏi sự quản lý liên tục tỉ mỉ.
+
+Thông tục, các hệ thống lâu dài, phức tạp như vậy được gọi là "thú cưng" bởi vì mọi người sẽ đặt tên cho chúng và chăm sóc cho một hệ thống đó. Giải pháp thay thế là "gia súc", được rút gọn, khối lượng công việc phù du và cơ sở hạ tầng ảo được xây dựng và phá hủy bởi tự động hóa. Phương pháp này đảm bảo rằng có một hệ thống mới (hoặc "bò") có sẵn để tiếp quản công việc.
+
+**Hợp nhất Dev và Ops**
+
+Các tổ chức công nghệ tinh vi đã di chuyển ra khỏi những thái cực lịch sử này trong nhiều thế hệ. Quá trình này tăng tốc với việc áp dụng rộng rãi ảo hóa máy chủ, đám mây và phát triển phần mềm Agile. Vào đầu những năm 2000, đã bắt đầu một phong trào để đối xử với Dev và Ops như một thực thể duy nhất:
+
+* Làm cho lập trình viên chịu trách nhiệm triển khai và bảo trì
+* Coi cơ sở hạ tầng ảo hóa như mã
