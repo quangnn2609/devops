@@ -171,3 +171,170 @@ Các tổ chức công nghệ tinh vi đã di chuyển ra khỏi những thái c
 
 * Làm cho lập trình viên chịu trách nhiệm triển khai và bảo trì
 * Coi cơ sở hạ tầng ảo hóa như mã
+
+## Sự phát triển của DevOps
+
+DevOps phát triển và tiếp tục phát triển ở nhiều nơi song song. Một số sự kiện quan trọng đã định hình kỷ luật như chúng ta biết ngày nay.
+
+**Xác định khoảnh khắc 1: Kỹ sư độ tin cậy trang web (Site Reliability Engineering-SRE)**
+
+Đến năm 2003, các công ty internet lớn nhất và tiên tiến nhất thế giới đã áp dụng ảo hóa đáng kể. Họ đã đối phó với các trung tâm dữ liệu lớn và các ứng dụng hoạt động trên quy mô lớn. Có những thất bại dẫn đến Dev vs. Ops chỉ tay, phát triển nhanh và liên tục không đủ số lượng nhân viên tổ chức, và căng thẳng trực tiếp.
+
+Google là một trong những công ty đầu tiên hiểu và thể chế hóa một loại mô tả công việc Dev + Ops lai mới. Đây là kỹ sư độ tin cậy trang web (SRE). Vai trò của SRE nhằm hợp nhất các ngành và kỹ năng của Dev và Ops, tạo ra một cuốn sách chơi đặc biệt và thực hành tốt nhất mới để thực hiện Ops với các phương pháp phần mềm.
+
+Cách tiếp cận SRE đã được nhiều công ty khác áp dụng. Cách tiếp cận này dựa trên:
+
+* Trách nhiệm chung
+* Chấp nhận rủi ro
+* Thừa nhận thất bại như bình thường
+* Cam kết sử dụng tự động hóa để giảm hoặc loại bỏ "vất vả"
+* Đo lường mọi thứ
+* Đủ điều kiện thành công trong việc đáp ứng các mục tiêu cấp dịch vụ định lượng
+
+**Xác định khoảnh khắc 2: Debois và "Cơ sở hạ tầng agile"**
+
+Tại Agile 2008, nhà phát triển người Bỉ Patrick Debois đã có một bài thuyết trình có tên Agile Infrastructure and Operations. Bài thuyết trình của ông đã thảo luận về cách áp dụng các phương pháp nhà phát triển cho Ops trong khi vẫn duy trì rằng Dev và Ops nên tách biệt. Tuy nhiên, năm sau, Debois tiếp tục thành lập chuỗi sự kiện DevOpsDays.
+
+Bài thuyết trình của Debois có ảnh hưởng trong việc thúc đẩy các cuộc thảo luận xung quanh việc tự động hóa cơ sở hạ tầng ảo (và vật lý), sử dụng điều khiển phiên bản (như Git) để lưu trữ mã triển khai cơ sở hạ tầng (thủ tục hoặc tuyên bố) và áp dụng các phương pháp Agile để phát triển và duy trì các giải pháp cấp cơ sở hạ tầng.
+
+**Khoảnh khắc xác định 3: Allspaw và Hammond**
+
+Vào cuối những năm 2000, DevOps ngày càng phổ biến. Trong số những minh họa hấp dẫn đầu tiên về giá trị của nó là một bài thuyết trình của John Allspaw và Paul Hammond tại VelocityConf vào năm 2009. Trong bài thuyết trình này, các tác giả phác thảo một tập hợp các thực tiễn tốt nhất của DevOps được thành lập dựa trên ý tưởng rằng cả Dev và Ops đều hợp tác cho phép kinh doanh. Những thực hành tốt nhất này bao gồm:
+* Cơ sở hạ tầng tự động
+* Điều khiển phiên bản dùng chung
+* Xây dựng và triển khai một bước
+
+Bài thuyết trình cũng mô tả tự động hóa, làm việc theo nhóm, chia sẻ trách nhiệm, minh bạch, tin tưởng, trách nhiệm giải trình lẫn nhau và thực tiễn truyền thông đã trở nên phổ biến trong số các học viên DevOps / SRE. Những thực tiễn này bao gồm CI / CD, kiểm tra tự động, số liệu, SLOs / SLAs và nắm lấy rủi ro không đổ lỗi và thất bại không thể tránh khỏi.
+
+DevOps/SRE có nhiều nguyên tắc cốt lõi và thực tiễn tốt nhất:
+
+* Tập trung vào tự động hóa
+* Ý tưởng rằng "thất bại là bình thường"
+* Một khúc xạ của "sự sẵn có" về những gì một doanh nghiệp có thể chịu đựng
+
+Cũng giống như Agile Development có thể được coi là một phương pháp để xác định và kiểm soát kỳ vọng quản lý cho các dự án phần mềm, DevOps có thể được xem như một cách cấu trúc văn hóa làm việc lành mạnh cho các bộ phận dựa trên công nghệ của doanh nghiệp. Nó cũng có thể được xem như là một cách để giảm chi phí. Bằng cách làm cho thất bại trở nên bình thường và giảm thiểu tự động hóa, công việc có thể tránh xa giờ làm việc đắt tiền và căng thẳng và vào lịch trình ngày làm việc theo kế hoạch.
+
+**Tự động hóa, tránh vất vả và giữ chân nhân tài**
+
+Tự động hóa cung cấp tốc độ và khả năng lặp lại trong khi loại bỏ lao động thủ công, lặp đi lặp lại. Điều này cho phép tài năng kỹ thuật dành thời gian giải quyết các vấn đề mới, tăng giá trị cho doanh nghiệp trong thời gian dành cho doanh nghiệp.
+
+Các học viên DevOps / SRE thường dự kiến sẽ dành một phần đáng kể thời gian làm việc (50% trở lên trong một số tình huống) để cung cấp khả năng hoạt động mới và mở rộng đáng tin cậy kỹ thuật, bao gồm phát triển công cụ tự động hóa. Điều này làm giảm giờ làm việc trực và can thiệp thủ công để hiểu và khắc phục sự cố.
+
+Việc mua lại và duy trì tài năng kỹ thuật đòi hỏi các tổ chức phải hợp tác với các nhà đổi mới của họ để giảm thiểu sự nhàm chán và căng thẳng của lao động có giá trị thấp và công việc trực tuyến, và nguy cơ phải đối mặt với những thất bại công nghệ không thể tránh khỏi trong chế độ "khoan lửa".
+
+Điều này đặc biệt quan trọng đối với các doanh nghiệp có lợi nhuận thấp, lợi nhuận bằng sự tăng trưởng nhanh chóng và quy mô lớn và cần kiểm soát chặt chẽ chi tiêu, đặc biệt là đối với số lượng nhân viên lành nghề. Tuy nhiên, đối với tất cả các loại tổ chức, điều quan trọng là công việc công nghệ thông tin phải được coi là một trung tâm lợi nhuận, chứ không phải là một trung tâm chi phí.
+
+**Thất bại là bình thường**
+
+Giả định rằng thất bại sẽ xảy ra ảnh hưởng đến phương pháp thiết kế phần mềm. DevOps phải xây dựng các sản phẩm và nền tảng có khả năng phục hồi cao hơn, khả năng chịu độ trễ cao hơn nếu có thể, tự giám sát tốt hơn, ghi nhật ký, nhắn tin lỗi người dùng cuối và tự phục hồi.
+
+Khi thất bại xảy ra và DevOps phải can thiệp, các hoạt động kết quả nên được xem không chỉ đơn giản là công việc sửa chữa, mà còn là nghiên cứu để xác định và xếp hạng các ứng cử viên thủ tục cho các vòng tự động hóa mới.
+
+**SLOs, SLIs và ngân sách lỗi**
+
+Quan trọng đối với văn hóa DevOps / SRE là hai ý tưởng liên kết: 1. DevOps phải cung cấp giá trị kinh doanh có thể đo lường được, thỏa thuận và 2. Thực tế thống kê của việc làm như vậy một cách hoàn hảo là không thể. Những ý tưởng này được hệ thống hóa trong Mục tiêu cấp dịch vụ (SLO) được xác định theo các số liệu thực được gọi là Chỉ số mức dịch vụ (SLIs).
+
+SLIs được thiết kế để lập bản đồ cho thực tế thực tế của việc cung cấp dịch vụ cho khách hàng: họ có thể đại diện cho một ngưỡng duy nhất hoặc cung cấp ngoặc tinh vi hơn để phân loại hơn nữa kết quả ngoại lệ. Ví dụ: SLI có thể tuyên bố rằng 99% yêu cầu sẽ được phục vụ trong vòng 50 mili giây và cũng có thể yêu cầu nắm bắt thông tin như liệu một yêu cầu >50msec có hoàn thành hay không, hoặc liệu một yêu cầu cụ thể có thất bại đối với khách hàng lớn nhất của bạn hay không.
+
+Phương pháp SLO / SLI cho phép phân phối giá trị kinh doanh rẻ hơn, nhanh hơn bằng cách loại bỏ nghĩa vụ tìm kiếm sự hoàn hảo để xây dựng những gì "đủ tốt". Nó cũng có thể ảnh hưởng đến tốc độ, phạm vi và các khía cạnh khác của phát triển để đảm bảo và cải thiện tính đầy đủ.
+
+Một cách để mô hình hóa kết quả SLO / SLI đòi hỏi phải thiết lập cái gọi là "ngân sách lỗi" cho một dịch vụ trong một khoảng thời gian nhất định (ngày, tuần, tháng, quý, v.v.), và sau đó trừ đi các thất bại để đạt được SLO từ giá trị này. Nếu ngân sách lỗi vượt quá, các quyết định hợp lý có thể được đưa ra, chẳng hạn như làm chậm tốc độ phát hành cho đến khi các nguồn lỗi được xác định và các bản sửa lỗi cụ thể được thực hiện và thử nghiệm.
+
+![image](https://user-images.githubusercontent.com/83932775/132305735-47880554-7c50-487d-b419-269e9147cee0.png)
+
+
+Đối với một dịch vụ nhất định, nó có ý nghĩa để cam kết cung cấp tốt trong khả năng, nhưng sau đó overdeliver. SLAs (thỏa thuận bên ngoài) được thiết lập tốt nhất đến nơi chúng sẽ dễ thực hiện. SLOs (mục tiêu cho hiệu suất thực tế) có thể được đặt cao hơn. Ngân sách lỗi là sự khác biệt giữa SLO và 100% tính khả dụng.
+
+**Tóm tắt DevOps và SRE**
+
+Bạn đã thấy DevOps / SRE đang cùng phát triển với các công nghệ như ảo hóa và container hóa, cho phép một cách tiếp cận thống nhất và bộ công cụ thống nhất để hỗ trợ ứng dụng phối hợp và kỹ thuật cơ sở hạ tầng.
+
+Tiếp theo, bạn sẽ tìm hiểu về một số cơ chế tự động hóa cơ sở hạ tầng.
+
+# Kịch bản tự động hóa cơ bản
+## Giới thiệu về Kịch bản tự động hóa cơ bản
+
+Các công cụ tự động hóa mạnh mẽ như Ansible, Puppet và Chef mang lại sự dễ sử dụng, khả năng dự đoán, kỷ luật và khả năng làm việc ở quy mô lớn cho công việc của DevOps. Nhưng điều đó không có nghĩa là bạn không thể thực hiện một số tự động hóa với các công cụ cơ bản hơn như Bash và Python. Công cụ tự động hóa hoạt động một phần bằng cách bọc chức năng shell, tiện ích hệ điều hành, chức năng API và các yếu tố mặt phẳng điều khiển khác để đơn giản, đồng nhất, làm giàu tính năng và khả năng tương thích trong các tình huống DevOps. Nhưng các công cụ vẫn không giải quyết được mọi vấn đề về triển khai và cấu hình.
+
+Đó là lý do tại sao mỗi công cụ tự động hóa có một hoặc nhiều chức năng thực hiện các lệnh và tập lệnh cơ bản trên các mục tiêu và trả về kết quả. Ví dụ, trong Ansible, các chức năng này bao gồm , và .command,shell,raw
+
+Đôi khi nó có thể nhanh hơn và đơn giản hơn để sử dụng các lệnh hoặc script shell. Thông thường, điều này là do nhiều triển khai công cụ bắt đầu bằng cách dịch tự động hóa ban đầu được viết bằng Bash, Python hoặc các ngôn ngữ khác và bạn muốn chuyển chức năng đó một cách nhanh chóng và chính xác vào công cụ trước khi chuyển và tái cấu trúc.
+
+Tóm lại, rất hiếm khi nhìn sâu vào các repos cơ sở hạ tầng được duy trì bởi công cụ mà không tìm thấy một số kịch bản. Vì vậy, có những kỹ năng này là rất quan trọng!
+
+## Công cụ cơ bản để viết kịch bản tự động hóa
+
+Shell có mặt khắp nơi, vì vậy kịch bản shell trong lịch sử là nền tảng của tự động hóa.
+
+**Bash**
+
+Trong Linux (và các hệ điều hành khác), shell tương tác với I / O tương tác, hệ thống tệp và giao tiếp liên xử lý. Điều này cung cấp các cách để ban hành lệnh, cung cấp đầu vào cho đầu ra xử lý và đường ống cho các chuỗi các tiện ích mạnh mẽ.
+
+Bourne Again Shell (BASH) là mặc định trên hầu hết các bản phân phối Linux. Do sự phổ biến của nó, các thuật ngữ "Bash" và "shell" thường được sử dụng thay thế cho nhau.
+
+Sử dụng các lệnh trong một tập lệnh Bash cũng giống như sử dụng chúng trực tiếp từ dòng lệnh. Phát triển kịch bản rất cơ bản có thể chỉ đơn giản là vấn đề sao chép các biểu thức dòng lệnh vào một tập tin sau khi kiểm tra các lệnh CLI để xem chúng có hoạt động hay không.
+
+Ngược lại, Python hoặc một ngôn ngữ cấp cao, tinh vi khác cho tự động hóa thủ tục đơn giản thường khó khăn hơn và có thể không đáng giá cho các dự án đơn giản.
+
+**Ngôn ngữ lập trình ngoài Bash**
+
+Ngôn ngữ tinh vi cải thiện trên Bash khi sự phức tạp và yêu cầu quy mô tăng lên. Chúng đặc biệt hữu ích khi xây dựng và vận hành cơ sở hạ tầng ảo hóa trong môi trường đám mây, sử dụng các SDK như AWS SDK cho Python hoặc AWS SDK cho javascript trong Node.js. Mặc dù Bash có thể được sử dụng để truy cập kịch bản vào AWS CLI, bạn có thể sử dụng các tính năng và thư viện tích hợp của các ngôn ngữ tinh vi hơn để phân tích các bộ dữ liệu trả về phức tạp (như JSON), quản lý nhiều thao tác song song, lỗi quy trình, xử lý phản hồi không đồng bộ đối với các lệnh và hơn thế nữa.
+
+Để phát triển và thực thi các tập lệnh bằng ngôn ngữ mong muốn của bạn, bạn có thể cần cài đặt và cấu hình ngôn ngữ đó trên hệ thống phát triển của mình và trên bất kỳ máy nhắm mục tiêu từ xa nào. Truy cập các chức năng tiện ích cấp hệ thống có thể yêu cầu gọi các thư viện (chẳng hạn như thư viện trong Python), sau đó gói các lệnh Bash CLI theo cú pháp bổ sung để thực thi. Bạn cũng cần xử lý mã trả về, thời gian chờ và các điều kiện khác trong môi trường ngôn ngữ ưa thích của bạn .os
+
+## Tự động hóa thủ tục
+
+Sử dụng Bash, Python hoặc các ngôn ngữ thông thường khác để tự động hóa thường có nghĩa là viết một quy trình bắt buộc. Một thủ tục bắt buộc là một chuỗi các lệnh có trật tự nhằm đạt được mục tiêu. Trình tự có thể bao gồm kiểm soát dòng chảy, điều kiện, cấu trúc chức năng, lớp và hơn thế nữa.
+
+Tự động hóa thủ tục như vậy có thể rất mạnh mẽ. Nhưng nó chỉ đơn giản nếu bạn am hiểu về cách các tiện ích hệ thống, CLIs / SDK và các giao diện khác hoạt động. Bạn cũng phải biết về trạng thái hệ thống mục tiêu.
+
+**Phát triển quy trình**
+
+Như bạn đã biết, nếu bạn tạo một tập lệnh nhỏ để cài đặt và cấu hình một phần mềm trên hệ thống mục tiêu từ xa, lần đầu tiên nó có thể chạy ổn. Chạy nó lần thứ hai tuy nhiên; Và kịch bản đơn giản của bạn có thể làm cho một mớ hỗn độn. Nó có thể ném lỗi và dừng lại khi nó tìm thấy ứng dụng đã được cài đặt, hoặc tệ hơn, bỏ qua một lỗi như vậy và tiếp tục thực hiện các thay đổi dư thừa trong các tệp cấu hình.
+
+Để làm cho kịch bản này an toàn hơn, dễ sử dụng hơn, linh hoạt hơn và có thể tái sử dụng, bạn cần làm cho nó thông minh hơn và phức tạp hơn. Ví dụ, bạn có thể nâng cao nó để:
+
+* Xác định xem nó đang chạy trong môi trường Debian hoặc CentOS và sử dụng trình quản lý gói chính xác (hoặc) và cú pháp.aptyum
+* Xác định xem ứng dụng mục tiêu của bạn đã được cài đặt trong một phiên bản thích hợp và chỉ thử cài đặt nó nếu nó không có mặt, dừng lại nếu không và không thực hiện thêm thay đổi nào.
+* Xác định xem nó đã thực hiện một bản sao của mỗi tệp cấu hình trước khi thay đổi nó và sử dụng trình soạn thảo luồng (, v.v.) để thực hiện các thay đổi chính xác, thay vì bất cẩn phụ lục văn bản vào các tệp cấu hình và hy vọng các ứng dụng tiêu thụ các tệp này sẽ không bị hỏng. awk sed
+
+Khi bạn phát triển và tinh chỉnh các kịch bản hơn nữa, bạn sẽ muốn chúng hoàn thành một số nhiệm vụ sau:
+
+* Khám phá, kiểm kê và biên soạn thông tin về các hệ thống mục tiêu và đảm bảo các tập lệnh thực hiện điều này theo mặc định.
+* Gói gọn sự phức tạp của việc cài đặt các ứng dụng một cách an toàn. Thực hiện sao lưu và thay đổi tệp cấu hình và khởi động lại các dịch vụ thành các biểu mẫu có thể tái sử dụng, chẳng hạn như các tập lệnh con có chứa tham số, thư viện chức năng và các thông tin khác.
+
+Để đảm bảo các kịch bản hiệu quả và có thể tái sử dụng, bạn sẽ:
+
+* Chuẩn hóa việc đặt hàng và trình bày các tham số, cờ và lỗi.
+* Tạo một hệ thống phân cấp mã phân chia nhiệm vụ một cách hợp lý và hiệu quả.
+* Tạo kịch bản cấp cao cho toàn bộ triển khai và kịch bản cấp thấp hơn cho các giai đoạn triển khai.
+* Dữ liệu cụ thể triển khai riêng biệt từ mã, làm cho mã chung chung và có thể tái sử dụng càng tốt.
+
+![image](https://user-images.githubusercontent.com/83932775/132317962-31a56dc5-0924-4c55-b023-d011372d883f.png)
+
+Loại kịch bản này có xu hướng nguy hiểm nếu trạng thái bắt đầu không hoàn toàn được biết đến và kiểm soát. Áp dụng các thay đổi tương tự một lần nữa cho một hệ thống được cấu hình chính xác thậm chí có thể phá vỡ nó.
+
+**Idempotency: một chủ đề định kỳ trong tự động hóa**
+
+Cuối cùng, mục tiêu của hầu hết mọi kịch bản là đạt được trạng thái mong muốn trong một hệ thống, bất kể điều kiện bắt đầu. Các kịch bản thủ tục được viết cẩn thận và các công cụ cấu hình khai báo kiểm tra các mục tiêu trước khi thực hiện các nhiệm vụ trên chúng, chỉ thực hiện các nhiệm vụ cần thiết để đạt được trạng thái mong muốn.
+
+Chất lượng phần mềm này được gọi là idempotency. Có một vài nguyên tắc cơ bản của sự gia tăng cần tuân theo:
+
+![image](https://user-images.githubusercontent.com/83932775/132319091-91944e7a-a4cb-4269-9417-ff91db42c0ba.png)
+
+## Thực thi Script cục bộ và từ xa
+
+Để cấu hình các hệ thống từ xa, bạn cần truy cập và thực thi các tập lệnh trên chúng. Có nhiều cách để làm điều này:
+
+* Bạn có thể lưu trữ các tập lệnh cục bộ, truyền chúng đến các máy nhắm mục tiêu với một tiện ích vỏ như , sau đó đăng nhập vào máy từ xa bằng cách sử dụng và thực thi chúng.scpssh
+* Bạn có thể ống các tập lệnh đến một máy từ xa bằng cách sử dụng và thực hiện chúng theo trình tự với các lệnh khác, chụp và trả kết quả cho thiết bị đầu cuối của bạn, tất cả trong một lệnh.cat | ssh
+* Bạn có thể cài đặt một máy khách truyền tệp an toàn đa năng như SFTP, sau đó sử dụng tiện ích đó để kết nối với máy từ xa, chuyển, đặt quyền thích hợp, sau đó thực hiện tệp tập lệnh của bạn.
+* Bạn có thể lưu trữ các tập lệnh trên webserver, đăng nhập vào máy từ xa và truy xuất chúng bằng , hoặc các tiện ích khác hoặc lưu trữ các tập lệnh trong kho lưu trữ Git. Cài đặt git trên máy từ xa, nhân bản repo vào nó, kiểm tra một nhánh và thực hiện các tập lệnh được tìm thấy ở đó.wgetcurl
+* Bạn có thể cài đặt một giải pháp hoạt động từ xa đầy đủ như VNC hoặc NoMachine cục bộ, cài đặt máy chủ của nó trên mục tiêu (điều này thường đòi hỏi cũng yêu cầu cài đặt môi trường máy tính để bàn đồ họa), truyền / sao chép và sau đó thực thi các tập lệnh.
+* Nếu các thiết bị mục tiêu của bạn được cung cấp trên khung đám mây, thường có một cách để tiêm một tập lệnh cấu hình thông qua cùng một lệnh CLI hoặc hành động WebUI thể hiện nền tảng.
+
+![image](https://user-images.githubusercontent.com/83932775/132319623-82f3928a-e2a2-4d06-8889-9f69e14a4ac9.png)
+
+Hầu hết các dịch vụ đám mây công cộng cho phép bạn tiêm các tập lệnh cấu hình trực tiếp vào các phiên bản VM để thực hiện tại thời điểm khởi động
+
+## Tự động hóa đám mây
