@@ -338,3 +338,46 @@ Chất lượng phần mềm này được gọi là idempotency. Có một vài
 Hầu hết các dịch vụ đám mây công cộng cho phép bạn tiêm các tập lệnh cấu hình trực tiếp vào các phiên bản VM để thực hiện tại thời điểm khởi động
 
 ## Tự động hóa đám mây
+
+Các framework điện toán đám mây cơ sở hạ tầng như một dịch vụ (IaaS) là một mục tiêu điển hình cho tự động hóa. Tự động hóa đám mây cho phép bạn cung cấp máy chủ ảo hóa, cấu hình mạng ảo và các kết nối khác, các dịch vụ trưng dụng và sau đó triển khai các ứng dụng trên cơ sở hạ tầng này.
+
+Các nhà cung cấp đám mây và cộng đồng nguồn mở thường cung cấp các hệ thống con chuyên biệt cho các công cụ triển khai phổ biến. Các hệ thống con này trích xuất một kho tài nguyên hoàn chỉnh từ framework đám mây và giữ cho nó được cập nhật trong thời gian thực trong khi tự động hóa thực hiện thay đổi, cho phép bạn dễ dàng viết tự động hóa hơn để quản lý các tài nguyên này.
+
+Bạn cũng có thể quản lý tài nguyên đám mây bằng cách sử dụng các tập lệnh được viết bằng Bash, Python hoặc các ngôn ngữ khác. Các tập lệnh như vậy được giúp đỡ bởi nhiều công cụ đơn giản hóa quyền truy cập vào các mục tiêu tự động hóa. Chúng bao gồm:
+
+* CLIs và SDK bao bọc REST và các giao diện khác của phần cứng, thực thể cơ sở hạ tầng ảo, higher-order control planes và API đám mây. Điều này làm cho các tính năng của chúng có thể truy cập từ shell (và thông qua các kịch bản Bash) và trong các chương trình Python.
+* Các công cụ dòng lệnh và các phân tích tích hợp của Python có thể trích xuát đầu ra JSON và YAML được clIs và SDK trả lại thành các định dạng đẹp, dễ đọc và thành các cấu trúc dữ liệu Python gốc để dễ thao tác.
+
+## Cloud CLIs and SDKs
+
+IaaS và các loại đám mây cơ sở hạ tầng khác cũng cung cấp CLIs và SDK cho phép kết nối dễ dàng với các giao diện cơ bản của chúng, thường dựa trên REST.
+
+**Cisco UCS - một bare metal cloud**
+
+Nếu bạn đã quen thuộc với các sản phẩm của Cisco Compute, bao gồm Unified Computing System (UCS), Hyperflex, UCS Manager và hệ thống quản lý cơ sở hạ tầng Intersight, bạn biết đây thực sự là một cửa ngõ để quản lý SaaS toàn cầu về cơ sở hạ tầng UCS / Hyperflex của một tổ chức.
+
+API chính của Cisco cho cơ sở hạ tầng này là API ResTful Của Cisco Intersight. Đây là một API tương thích OpenAPI có thể được thẩm vấn với Swagger và các công cụ OpenAPI nguồn mở khác. Điều này cho phép bạn tạo các SDK chuyên dụng cho các ngôn ngữ và môi trường tùy ý và đơn giản hóa nhiệm vụ ghi lại API (và duy trì SDK).
+
+Cisco cung cấp và duy trì một loạt các SDK cho API Intersight RESTful, bao gồm cả các SDK cho Python và Microsoft PowerShell. Họ cũng cung cấp một loạt các mô-đun Ansible.
+
+**VMware**
+
+CLI chính của VMware bây giờ là Datacenter CLI, cho phép hoạt động dòng lệnh của API vCenter Server và VMware Cloud trên AWS. Nó được viết bằng Python và chạy trên Linux, Mac và Windows.
+
+VMware cũng cung cấp vSphere CLI cho Linux và Windows, cho phép bạn quản lý máy chủ ảo hóa ESXi, máy chủ vCenter và cung cấp một tập hợp con các lệnh DCLI. Nó cũng cung cấp PowerCLI cho Windows PowerShell, cung cấp lệnh ghép ngắn cho môi trường vSphere, vCloud, vRealize Operations Manager, vSAN, NSX-T, VMware Cloud trên AWS, VMware HCX, VMware Site Recovery Manager và môi trường VMware Horizon.
+
+VMware cũng cung cấp một loạt các SDK cho các ngôn ngữ phổ biến (bao gồm Python), nhằm vào vSphere Automation, vCloud Suite, vSAN và các sản phẩm khác.
+
+**OpenStack**
+
+Dự án OpenStack cung cấp OpenStack Client (OSC), được viết bằng Python. OSC cho phép bạn truy cập OpenStack Compute, Identity, Image, Object Storage và Block Storage API.
+
+Cài đặt các máy khách dòng lệnh cũng cài đặt OpenStack Python SDK đi kèm, cho phép một loạt các lệnh OpenStack trong Python.
+
+OpenStack Toolkits cũng có sẵn cho nhiều ngôn ngữ phổ biến khác.
+
+## Tóm tắt kịch bản tự động hóa cơ bản
+
+
+Các kỹ thuật viết kịch bản tự động hóa cơ bản là tuyệt vời để có trong hộp công cụ của bạn và hiểu chúng sẽ cải thiện cơ sở của bạn như một nhà điều hành và người sử dụng các nền tảng tự động hóa trưởng thành.
+
