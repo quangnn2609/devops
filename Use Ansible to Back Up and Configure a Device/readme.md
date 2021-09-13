@@ -149,10 +149,98 @@ Playbook bạn đã tạo chứa một play với hai task. Sau đây là phần
 * **tasks:** - Từ khóa này cho biết một hoặc nhiều task sẽ được thực hiện.
 
 Task vụ đầu tiên là hiển thị cấu hình đang chạy
-* - name: DISPLAYING THE RUNNING-CONFIG - Tên của task
+* **- name: DISPLAYING THE RUNNING-CONFIG** - Tên của task
 *  **ios_command:** - Đây là một **module** Ansible được sử dụng để gửi lệnh đến thiết bị IOS và trả về kết quả đọc được từ thiết bị. Tuy nhiên, nó không hỗ trợ các lệnh cấu hình. Mô-đun **ios_config** được sử dụng cho mục đích này, như bạn sẽ thấy trong Phần tiếp theo của phòng thí nghiệm này
 *  Lưu ý: Trong terminal Linux, bạn có thể sử dụng lệnh **ansible-doc** *module_name* để xem các trang hướng dẫn sử dụng cho bất kỳ mô-đun nào và các tham số liên quan đến mô-đun đó. (ví dụ: **ansible-doc ios_command**)
 *  **commands:** - Tham số này được liên kết với mô-đun **ios_command**. Nó được sử dụng để liệt kê các lệnh IOS trong playbook sẽ được gửi đến thiết bị IOS từ xa. Kết quả đầu ra từ lệnh được trả về.
 *  **- show running-config** - Đây là lệnh Cisco IOS được gửi bằng module **ios_command**
 *  **register: config** - Ansible bao gồm các register được sử dụng để bắt đầu ra của một tác vụ thành một biến. Mục nhập này chỉ định rằng đầu ra từ lệnh **running-config** của chương trình trước đó sẽ được lưu trữ trong  biến **config**
+
+Task thứ hai là lưu đầu ra:
+
+* **name: SAVE OUTPUT TO ./backups/** - Tên của task
+* **copy: -** Đây là một mô-đun Ansible được sử dụng để sao chép tệp đến một vị trí từ xa. Có hai tham số được liên kết với mô-đun này:
+ * **content**: "{{ config.stdout[0] }}" - Giá trị được chỉ định cho tham số này là dữ liệu được lưu trữ trong biến cấu hình, biến register Ansible được sử dụng trong tác vụ trước đó.Standard output (**stdout**) là bộ mô tả tệp mặc định nơi một quy trình có thể ghi đầu ra được sử dụng trong các hệ điều hành giống Unix, chẳng hạn như Linux và Mac OS X.
+ * **dest: "backups/show_run_{{ inventory_hostname }}.txt" -** Đây là đường dẫn và tên tệp đến nơi tệp sẽ được sao chép. Biến **inventory_hostname** là một "magic variable" Ansible tự động nhận tên hostname được định cấu hình trong tệp **hosts**. Trong trường hợp của bạn, hãy nhớ lại rằng đây là **CSR1kv**. Tham số này dẫn đến một tệp **show_run_CSR1kv.txt** được lưu trữ trong thư mục **backup**. Tệp sẽ chứa đầu ra của lệnh **show running-config**. Bạn sẽ tạo thư mục **backups** trong bước tiếp theo.
+
+### Bước 3: Chạy Playbook sao lưu Ansible.
+a. Trong Phần 1, bạn đã khởi động CSR1000v VM. Ping nó để xác minh bạn có thể truy cập nó. Nhập Ctrl + C để hủy ping.
+
+![image](https://user-images.githubusercontent.com/83932775/133031401-b9a29805-0cd3-4ecf-947e-f50bcfa9fc80.png)
+
+b. Tạo thư mục **backups**. Như đã chỉ ra trong dòng cuối cùng của playbook của bạn, đây là thư mục nơi tệp cấu hình sao lưu sẽ được lưu trữ.
+
+![image](https://user-images.githubusercontent.com/83932775/133031522-3bafca1e-7bc7-4ce6-9579-e61c00c2fb31.png)
+
+c. Bây giờ bạn có thể chạy playbook Ansible bằng lệnh **ansible-playbook**:
+
+![image](https://user-images.githubusercontent.com/83932775/133032458-a8f2603e-18ee-4b5b-9862-0e27768869f4.png)
+
+**Lưu ý**: Trong nhiều ví dụ, bạn sẽ thấy playbook chạy bằng tùy chọn -i _inventory-filename_. Ví dụ:
+
+ansible-playbook backup_cisco_router_playbook.yaml -i hosts
+
+Tùy chọn này cho Ansible biết vị trí và tên của tệp inventory, danh sách thiết bị mà playbook sẽ sử dụng. Tùy chọn này là không cần thiết vì bạn đã định cấu hình tên và vị trí tệp inventory trong tệp **ansible.cfg** cục bộ của bạn: inventory==./hosts. Bạn có thể sử dụng tùy chọn -i _inventory-filename_ để ghi đè thông tin trong tệp **ansible.cfg**.
+
+**PLAY RECAP** sẽ hiển thị **ok = 2 changed = 1** cho biết thực hiện playbook thành công.
+
+Nếu playbook Ansible của bạn không thành công, một số điều cần kiểm tra trong playbook của bạn là:
+* Đảm bảo **hosts** và tệp **ansible.cfg** của bạn là chính xác.
+* Đảm bảo thụt lề YAML là chính xác.
+* Đảm bảo rằng lệnh IOS của bạn là chính xác.
+* Kiểm tra tất cả cú pháp playbook Ansible.
+* Xác minh rằng bạn có thể ping CSR1000v.
+
+Nếu bạn tiếp tục gặp sự cố:
+* Thử gõ từng dòng một và chạy playbook mỗi lần.
+* So sánh tệp của bạn với playbook giải pháp trong thư mục ansible_solutions.
+
+### Bước 4: Xác minh tệp sao lưu đã được tạo.
+Trong VS Code, mở thư mục **backups** và mở tệp **show_run_CSR1kv.txt**. Bạn cũng có thể sử dụng cửa sổ terminal  **cat /show_run_CSR1kv.txt**. Bây giờ bạn có một bản sao lưu của cấu hình CSR1000v.
+
+![image](https://user-images.githubusercontent.com/83932775/133033828-c457b97e-ede0-48c8-b41e-902260a729b6.png)
+
+## Phần 4: Sử dụng Ansible để định cấu hình thiết bị.
+Trong Phần này, bạn sẽ tạo một playbook Ansible khác để định cấu hình định địa chỉ IPv6 trên bộ định tuyến CSR1000v.
+### Bước 1: Xem tệp hosts của bạn.
+a. Kiểm tra lại tệp **hosts** của bạn. Xin nhắc lại, tệp này chứa bí danh **CSR1kv** và ba biến cho tên người dùng, mật khẩu và địa chỉ IP máy chủ. Playbook cho Phần này cũng sẽ sử dụng tệp này và tệp **ansible.cfg** mà bạn đã tạo sớm trong phòng thí nghiệm.
+
+### Bước 2: Tạo một playbook mới.
+a. Trong VS Code, tạo một tệp mới trong thư mục **ansible-csr1000v** với tên sau:
+**cisco_router_ipv6_config_playbook.yaml**
+
+b. Thêm thông tin sau vào tệp. Đảm bảo rằng bạn sử dụng thụt lề YAML thích hợp. Mọi khoảng trống và dấu gạch ngang đều có ý nghĩa. Bạn có thể mất một số định dạng nếu bạn sao chép và dán.
+
+![image](https://user-images.githubusercontent.com/83932775/133034936-16f6fc5d-1057-4a6c-ac2e-108316fa9d02.png)
+
+### Bước 3: Kiểm tra playbook Ansible của bạn.
+Phần lớn playbook này tương tự như playbook bạn đã tạo trong Phần trước. Sự khác biệt chính là nhiệm vụ đầu tiên SET IPv6 ADDRESS.
+
+Sau đây là mô tả ngắn gọn về các mục trong task:
+* **ios_config:** - Đây là một mô-đun Ansible được sử dụng để cấu hình thiết bị IOS. Bạn có thể sử dụng lệnh **ansible-doc ios_config** để xem chi tiết về các tham số **lines** và **parents** được sử dụng trong playbook này.
+* **parents: "interface GigabitEthernet1"** - Tham số này cho biết chế độ cấu hình interface IOS.
+* **lines:** - Một tập hợp lệnh IOS có thứ tự được định cấu hình trong phần này, chỉ định thông tin địa chỉ IPv6 cho interface GigabitEthernet1.
+
+Phần còn lại của playbook tương tự như các task trong Phần trước. Tác vụ thứ hai sử dụng mô-đun **ios_command** và lệnh **show ipv6 interface brief** để hiển thị đầu ra và gửi nó đến register ouput.
+
+Tác vụ cuối cùng lưu thông tin trong register **output** vào tệp **IPv6_output_CSR1kv.txt** trong thư mục con **ios_configurations**.
+
+### Bước 4: Chạy playbook Ansible để định cấu hình địa chỉ IPv6 trên CSR1000v VM
+a. Trong Phần 1, bạn đã khởi động CSR1000v VM. Ping nó để xác minh bạn có thể truy cập nó. Nhập Ctrl + C để hủy ping.
+
+b. Tạo thư mục **ios_configurations**. Như đã chỉ ra trong dòng cuối cùng của playbook của bạn, đây là thư mục nơi lưu trữ kết quả đầu ra cho lệnh **show ipv6 interface brie**f.
+
+![image](https://user-images.githubusercontent.com/83932775/133036301-42aac746-4dec-4724-8ca9-2a90db9d1273.png)
+
+c. Bây giờ bạn có thể chạy playbook Ansible bằng lệnh **ansible-playbook**. Tùy chọn **-v** verbose có thể được sử dụng để hiển thị các tác vụ đang được thực hiện trong playbook.
+
+![image](https://user-images.githubusercontent.com/83932775/133036582-36f70332-ee14-4b89-8b78-3bb671c61d91.png)
+
+Lần đầu tiên bạn chạy playbook, **PLAY RECAP** sẽ hiển thị **ok = 3** **change = 2** và **fail = 0** cho biết quá trình thực hiện thành công. Các giá trị này có thể khác nếu bạn chạy lại playbook.
+
+
+### Bước 5: Xác minh tệp ouput đã được tạo.
+Trong VS Code, mở thư mục **ios_configurations** và nhấp vào tệp **IPv6_output_CSR1kv.txt**. Bạn cũng có thể sử dụng terminal để xem tệp với **cat ios_configurations/IPv6_output_CSR1kv.txt**. Bây giờ bạn có một bản sao lưu của cấu hình CSR1000v.
+
+![image](https://user-images.githubusercontent.com/83932775/133037088-b117f9fe-e29c-4100-ba12-67b2b97c5ac4.png)
 
